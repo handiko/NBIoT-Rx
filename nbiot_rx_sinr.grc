@@ -1,0 +1,2100 @@
+options:
+  parameters:
+    author: ''
+    catch_exceptions: 'True'
+    category: '[GRC Hier Blocks]'
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: 'NB-IoT downlink broadcast decoder with per-subframe SINR / co-channel
+      interference analysis (standalone / guard-band anchor): NPSS sync, cell ID,
+      MIB-NB, SIB1-NB and SI messages. RTL-SDR, stock blocks + 2 EPBs + Python Module.'
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: qt_gui
+    hier_block_src_path: '.:'
+    id: nbiot_rx_sinr
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: NB-IoT downlink decoder + SINR analysis
+    window_size: (1700,1150)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 8]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: cfo_hz
+  id: variable_qtgui_range
+  parameters:
+    comment: 'Normally 0: the sync block searches +-7 kHz and tracks drift by itself'
+    gui_hint: 0,3,1,1
+    label: Fine tune [Hz]
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '-5000'
+    step: '50'
+    stop: '5000'
+    value: '0'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [600, 260]
+    rotation: 0
+    state: enabled
+- name: chan_taps
+  id: variable
+  parameters:
+    comment: keeps the 180 kHz carrier (+-90 kHz), rejects >115 kHz
+    value: firdes.low_pass(1.0, samp_rate, 100e3, 30e3, window.WIN_HAMMING)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [600, 12]
+    rotation: 0
+    state: enabled
+- name: f_nb
+  id: variable_qtgui_entry
+  parameters:
+    comment: 'Centre of the 180 kHz block (Gqrx: middle of the flat top). Standalone
+      carriers sit on the 100 kHz raster.'
+    entry_signal: editingFinished
+    gui_hint: 0,0,1,1
+    label: NB-IoT carrier [Hz]
+    type: real
+    value: 935.4e6
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 260]
+    rotation: 0
+    state: enabled
+- name: gain
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: 0,2,1,1
+    label: RTL gain [dB]
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: '0.1'
+    stop: '49.6'
+    value: '30'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [400, 260]
+    rotation: 0
+    state: enabled
+- name: half_sc
+  id: variable
+  parameters:
+    comment: 'NB-IoT sub-carriers sit at (k-5.5)*15 kHz: multiply each FFT window
+      by exp(j*pi*n/128)'
+    value: '[complex(x) for x in nbiot.SHIFT_VEC]'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [470, 100]
+    rotation: 0
+    state: enabled
+- name: if_offset
+  id: variable
+  parameters:
+    comment: tune the RTL this far above the carrier to keep its DC spike away
+    value: 300e3
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [330, 12]
+    rotation: 0
+    state: enabled
+- name: lo_freq
+  id: variable
+  parameters:
+    comment: ''
+    value: f_nb + if_offset
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [470, 12]
+    rotation: 0
+    state: enabled
+- name: npss_len
+  id: variable
+  parameters:
+    comment: ''
+    value: len(npss_taps)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [360, 100]
+    rotation: 0
+    state: enabled
+- name: npss_taps
+  id: variable
+  parameters:
+    comment: NPSS matched filter at 240 kS/s (display branch)
+    value: nbiot.npss_matched_taps(samp_rate / 8)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [200, 100]
+    rotation: 0
+    state: enabled
+- name: ppm
+  id: variable_qtgui_entry
+  parameters:
+    comment: same value as Gqrx
+    entry_signal: editingFinished
+    gui_hint: 0,1,1,1
+    label: RTL ppm
+    type: real
+    value: '34'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [200, 260]
+    rotation: 0
+    state: enabled
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: '128-pt FFT at 15 kHz spacing: CP = 10/9 samples exactly'
+    value: 1.92e6
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [200, 12]
+    rotation: 0
+    state: enabled
+- name: split_db
+  id: variable_qtgui_range
+  parameters:
+    comment: applied at start-up (restart the flowgraph after changing)
+    gui_hint: 4,3,1,1
+    label: Clean/interfered split [dB]
+    min_len: '150'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: '1'
+    stop: '20'
+    value: '8'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [800, 260]
+    rotation: 0
+    state: enabled
+- name: agc
+  id: analog_agc2_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    attack_rate: 1e-5
+    comment: 'slow (~50 ms) level control, only for fixed display scales.
+
+      Min output buffer 2M samples (1.1 s): lets the Python blocks pause without RTL
+      overflows ("O")'
+    decay_rate: 1e-5
+    gain: '1.0'
+    max_gain: 1e6
+    maxoutbuf: '0'
+    minoutbuf: '2097152'
+    reference: '1.0'
+    type: complex
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [620, 420]
+    rotation: 0
+    state: enabled
+- name: cbch
+  id: qtgui_const_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    autoscale: 'False'
+    axislabels: 'True'
+    color1: '"blue"'
+    color10: '"dark blue"'
+    color2: '"red"'
+    color3: '"green"'
+    color4: '"black"'
+    color5: '"cyan"'
+    color6: '"magenta"'
+    color7: '"yellow"'
+    color8: '"dark red"'
+    color9: '"dark green"'
+    comment: ''
+    grid: 'True'
+    gui_hint: 2,1,2,1
+    label1: ''
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    legend: 'False'
+    marker1: '0'
+    marker10: '0'
+    marker2: '0'
+    marker3: '0'
+    marker4: '0'
+    marker5: '0'
+    marker6: '0'
+    marker7: '0'
+    marker8: '0'
+    marker9: '0'
+    name: '"NPBCH (MIB-NB), equalised"'
+    nconnections: '1'
+    size: '1216'
+    style1: '0'
+    style10: '0'
+    style2: '0'
+    style3: '0'
+    style4: '0'
+    style5: '0'
+    style6: '0'
+    style7: '0'
+    style8: '0'
+    style9: '0'
+    tr_chan: '0'
+    tr_level: '0.0'
+    tr_mode: qtgui.TRIG_MODE_FREE
+    tr_slope: qtgui.TRIG_SLOPE_POS
+    tr_tag: '""'
+    type: msg_complex
+    update_time: '0.10'
+    width1: '1'
+    width10: '1'
+    width2: '1'
+    width3: '1'
+    width4: '1'
+    width5: '1'
+    width6: '1'
+    width7: '1'
+    width8: '1'
+    width9: '1'
+    xmax: '2'
+    xmin: '-2'
+    ymax: '2'
+    ymin: '-2'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2568, 480.0]
+    rotation: 0
+    state: enabled
+- name: cclean
+  id: qtgui_const_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    autoscale: 'False'
+    axislabels: 'True'
+    color1: '"blue"'
+    color10: '"dark blue"'
+    color2: '"red"'
+    color3: '"green"'
+    color4: '"black"'
+    color5: '"cyan"'
+    color6: '"magenta"'
+    color7: '"yellow"'
+    color8: '"dark red"'
+    color9: '"dark green"'
+    comment: ''
+    grid: 'True'
+    gui_hint: 2,2,2,1
+    label1: ''
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    legend: 'False'
+    marker1: '0'
+    marker10: '0'
+    marker2: '0'
+    marker3: '0'
+    marker4: '0'
+    marker5: '0'
+    marker6: '0'
+    marker7: '0'
+    marker8: '0'
+    marker9: '0'
+    name: '"NPDSCH: CLEAN subframes (SINR >= split)"'
+    nconnections: '1'
+    size: '1216'
+    style1: '0'
+    style10: '0'
+    style2: '0'
+    style3: '0'
+    style4: '0'
+    style5: '0'
+    style6: '0'
+    style7: '0'
+    style8: '0'
+    style9: '0'
+    tr_chan: '0'
+    tr_level: '0.0'
+    tr_mode: qtgui.TRIG_MODE_FREE
+    tr_slope: qtgui.TRIG_SLOPE_POS
+    tr_tag: '""'
+    type: msg_complex
+    update_time: '0.10'
+    width1: '1'
+    width10: '1'
+    width2: '1'
+    width3: '1'
+    width4: '1'
+    width5: '1'
+    width6: '1'
+    width7: '1'
+    width8: '1'
+    width9: '1'
+    xmax: '2'
+    xmin: '-2'
+    ymax: '2'
+    ymin: '-2'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2568, 416.0]
+    rotation: 0
+    state: enabled
+- name: cdirty
+  id: qtgui_const_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    autoscale: 'False'
+    axislabels: 'True'
+    color1: '"blue"'
+    color10: '"dark blue"'
+    color2: '"red"'
+    color3: '"green"'
+    color4: '"black"'
+    color5: '"cyan"'
+    color6: '"magenta"'
+    color7: '"yellow"'
+    color8: '"dark red"'
+    color9: '"dark green"'
+    comment: ''
+    grid: 'True'
+    gui_hint: 2,3,2,1
+    label1: ''
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    legend: 'False'
+    marker1: '0'
+    marker10: '0'
+    marker2: '0'
+    marker3: '0'
+    marker4: '0'
+    marker5: '0'
+    marker6: '0'
+    marker7: '0'
+    marker8: '0'
+    marker9: '0'
+    name: '"NPDSCH: INTERFERED subframes (SINR < split)"'
+    nconnections: '1'
+    size: '1216'
+    style1: '0'
+    style10: '0'
+    style2: '0'
+    style3: '0'
+    style4: '0'
+    style5: '0'
+    style6: '0'
+    style7: '0'
+    style8: '0'
+    style9: '0'
+    tr_chan: '0'
+    tr_level: '0.0'
+    tr_mode: qtgui.TRIG_MODE_FREE
+    tr_slope: qtgui.TRIG_SLOPE_POS
+    tr_tag: '""'
+    type: msg_complex
+    update_time: '0.10'
+    width1: '1'
+    width10: '1'
+    width2: '1'
+    width3: '1'
+    width4: '1'
+    width5: '1'
+    width6: '1'
+    width7: '1'
+    width8: '1'
+    width9: '1'
+    xmax: '2'
+    xmin: '-2'
+    ymax: '2'
+    ymin: '-2'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2568, 352.0]
+    rotation: 0
+    state: enabled
+- name: chan
+  id: freq_xlating_fft_filter_ccc
+  parameters:
+    affinity: ''
+    alias: ''
+    center_freq: -if_offset + cfo_hz
+    comment: carrier -> 0 Hz, 180 kHz channel filter, stays at 1.92 MS/s
+    decim: '1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    nthreads: '1'
+    samp_delay: '0'
+    samp_rate: samp_rate
+    taps: chan_taps
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [400, 420]
+    rotation: 0
+    state: enabled
+- name: dec
+  id: epy_block
+  parameters:
+    _source_code: "\"\"\"\nNB-IoT broadcast decoder with interference (SINR) analysis\
+      \ -- Embedded Python Block (GNU Radio 3.10)\n\nInput : complex vectors of 12\
+      \ = the 12 NB-IoT sub-carriers of one OFDM symbol\n        (stock FFT -> Keep\
+      \ M in N -> Stream to Vector), frames marked by the 'frame' tag.\nOutput message\
+      \ ports:\n  'text'   : pmt string per decoded item (cell ID, MIB-NB, SIB1-NB,\
+      \ SI messages) -> Message Debug\n  'npbch'  : PDU of equalised NPBCH symbols\
+      \      -> QT GUI Constellation Sink (msg_complex)\n  'npdsch_clean' : PDU of\
+      \ SIB/SI NPDSCH symbols from subframes with SINR >= split_db\n  'npdsch_dirty'\
+      \ : the same from subframes with SINR <  split_db (co-channel bursts)\n  'sinr'\
+      \   : PDU f32vector of 10 values per frame = per-subframe SINR (dB) -> QT Time\
+      \ Raster (msg_float)\n             (-10 = subframe without serving-cell NRS:\
+      \ NPSS, NSSS, or not yet known to carry NRS)\n\nWhy an EPB: NSSS cell-ID search\
+      \ (504 x 4 hypotheses), NRS channel estimation, transmit-\ndiversity combining,\
+      \ Rel-13/14 NPBCH blind frame alignment, tail-biting Viterbi with\nCRC-arbitrated\
+      \ hypotheses, SIB1-NB/SI scheduling and ASN.1 decoding have no stock blocks.\n\
+      All maths lives in the Python Module `nbiot` (passed in as `lib`).\n\"\"\"\n\
+      import numpy as np\nimport pmt\nfrom gnuradio import gr\n\n\nclass blk(gr.sync_block):\n\
+      \    def __init__(self, lib=None, verbose=True, split_db=8.0):\n        gr.sync_block.__init__(self,\
+      \ name='NB-IoT Decoder + SINR (cell ID, MIB-NB, SIBs)',\n                  \
+      \             in_sig=[(np.complex64, 12)], out_sig=None)\n        for p in ('text',\
+      \ 'npbch', 'npdsch_clean', 'npdsch_dirty', 'sinr'):\n            self.message_port_register_out(pmt.intern(p))\n\
+      \        self.verbose = verbose\n        self.dec = lib.Decoder(log=self._log,\
+      \ msg=self._msg, const=self._const, vec=self._vec,\n                       \
+      \        split_db=float(split_db)) if lib is not None else None\n        self.grid\
+      \ = None\n        self.n = 0\n        self.seq = 0\n\n    def _log(self, s):\n\
+      \        if self.verbose:\n            print(s, flush=True)\n\n    def _msg(self,\
+      \ s):\n        self.message_port_pub(pmt.intern('text'), pmt.intern(s))\n\n\
+      \    def _const(self, name, z):\n        z = np.asarray(z, np.complex64)\n \
+      \       z = z / (np.sqrt(np.mean(np.abs(z) ** 2)) + 1e-12)\n        self.message_port_pub(pmt.intern(name),\
+      \ pmt.cons(pmt.PMT_NIL, pmt.init_c32vector(len(z), z)))\n\n    def _vec(self,\
+      \ name, v):\n        v = np.asarray(v, np.float32)\n        self.message_port_pub(pmt.intern(name),\
+      \ pmt.cons(pmt.PMT_NIL, pmt.init_f32vector(len(v), v)))\n\n    def work(self,\
+      \ input_items, output_items):\n        inp = input_items[0]\n        if self.dec\
+      \ is None:\n            return len(inp)\n        base = self.nitems_read(0)\n\
+      \        starts = sorted((t.offset - base, pmt.to_long(t.value))\n         \
+      \               for t in self.get_tags_in_window(0, 0, len(inp), pmt.intern('frame')))\n\
+      \        bounds = [s for s, _ in starts] + [len(inp)]\n        i = 0\n     \
+      \   if starts and starts[0][0] > 0:\n            self._fill(inp[:starts[0][0]])\n\
+      \        for j, (s, seq) in enumerate(starts):\n            self.grid = np.zeros((140,\
+      \ 12), complex)\n            self.n = 0\n            self.seq = seq\n      \
+      \      self._fill(inp[s:bounds[j + 1]])\n        if not starts:\n          \
+      \  self._fill(inp)\n        return len(inp)\n\n    def _fill(self, v):\n   \
+      \     if self.grid is None or len(v) == 0:\n            return\n        k =\
+      \ min(140 - self.n, len(v))\n        self.grid[self.n:self.n + k] = v[:k]\n\
+      \        self.n += k\n        if self.n == 140:\n            try:\n        \
+      \        self.dec.feed_frame(self.grid, self.seq)\n            except Exception\
+      \ as e:                      # never let one bad frame stop the flowgraph\n\
+      \                print('[decoder] frame %d: %s' % (self.seq, e), flush=True)\n\
+      \            self.grid = None\n"
+    affinity: ''
+    alias: ''
+    comment: 'EPB #2: NSSS cell ID, NRS channel estimation, NPBCH -> MIB-NB,
+
+      NPDSCH -> SIB1-NB -> SI messages,
+
+      + per-subframe SINR at the NRS (co-channel burst detector)'
+    lib: nbiot
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    split_db: split_db
+    verbose: 'True'
+  states:
+    _io_cache: ('NB-IoT Decoder + SINR (cell ID, MIB-NB, SIBs)', 'blk', [('lib', 'None'),
+      ('verbose', 'True'), ('split_db', '8.0')], [('0', 'complex', 12)], [('sinr',
+      'message', 1), ('npdsch_dirty', 'message', 1), ('npdsch_clean', 'message', 1),
+      ('npbch', 'message', 1), ('text', 'message', 1)], '', ['verbose'])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2000, 336.0]
+    rotation: 0
+    state: enabled
+- name: fsrc
+  id: blocks_file_source
+  parameters:
+    affinity: ''
+    alias: ''
+    begin_tag: pmt.PMT_NIL
+    comment: 'Offline: a 1.92 MS/s complex64 recording tuned to lo_freq (Gqrx raw
+      I/Q, RTL at f_nb + 300 kHz).
+
+      Enable this + Throttle, disable the RTL source.'
+    file: D:\IQ Recordings\gqrx_20261118_123917_935700000_1920000_fc.raw
+    length: '0'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    offset: '0'
+    repeat: 'False'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 520]
+    rotation: 0
+    state: disabled
+- name: gdb
+  id: blocks_nlog10_ff
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    k: '0'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    n: '10'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2020, 520]
+    rotation: 0
+    state: enabled
+- name: gmag
+  id: blocks_complex_to_mag_squared
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1840, 520]
+    rotation: 0
+    state: enabled
+- name: gras
+  id: qtgui_time_raster_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    axislabels: 'True'
+    color1: '2'
+    color10: '0'
+    color2: '0'
+    color3: '0'
+    color4: '0'
+    color5: '0'
+    color6: '0'
+    color7: '0'
+    color8: '0'
+    color9: '0'
+    comment: ''
+    grid: 'False'
+    gui_hint: 2,0,2,1
+    label1: ''
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    mult: '[]'
+    name: '"Resource grid: 12 sub-carriers x 280 symbols (2 frames)"'
+    ncols: '12'
+    nconnections: '1'
+    nrows: '280'
+    offset: '[]'
+    samp_rate: 12 * 14000
+    type: float
+    update_time: '0.10'
+    x_end_value: '12.0'
+    x_label: '"sub-carrier"'
+    x_start_value: '0.0'
+    y_end_value: '20.0'
+    y_label: '""'
+    y_start_value: '0.0'
+    zmax: '45'
+    zmin: '15'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2144, 636.0]
+    rotation: 0
+    state: enabled
+- name: halfsc
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: half-subcarrier shift (7.5 kHz) per FFT window
+    const: half_sc
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: complex
+    vlen: '128'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1060, 412]
+    rotation: 0
+    state: enabled
+- name: k8
+  id: blocks_keep_one_in_n
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    n: '8'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [820, 700]
+    rotation: 0
+    state: enabled
+- name: keep12
+  id: blocks_keep_m_in_n
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: bins 59..70 = NB-IoT sub-carriers 0..11
+    m: '12'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    n: '128'
+    offset: '59'
+    type: complex
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1640, 404]
+    rotation: 0
+    state: enabled
+- name: mdbg
+  id: blocks_message_debug
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: decoded text
+    en_uvec: 'True'
+    log_level: info
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2568, 552.0]
+    rotation: 0
+    state: enabled
+- name: nbiot
+  id: epy_module
+  parameters:
+    alias: ''
+    comment: 'NB-IoT DSP library (NPSS/NSSS/NRS, NPBCH, NPDSCH, TBCC, ASN.1).
+
+      Used by both EPBs and by the variables. Optional: pip install pycrate'
+    source_code: "\"\"\"NB-IoT downlink receiver library (3GPP TS 36.211 / 36.212\
+      \ / 36.213 / 36.331, Rel-13/14).\n\nUsed in GRC as a Python Module block with\
+      \ id `nbiot`. Pure numpy; pycrate is optional\n(needed only to print SIB contents\
+      \ and to find the SI-message schedule).\n\nScope: standalone and guard-band\
+      \ anchor carriers (full chain), in-band (sync + MIB-NB only).\nSignal processing\
+      \ that GNU Radio has stock blocks for (tuning, filtering, FFT, sub-carrier\n\
+      selection, displays) is NOT here; this file holds only what stock blocks cannot\
+      \ do.\n\"\"\"\nimport numpy as np\n\n# ----------------------------------------------------------------------------------------\n\
+      # Numerology at 1.92 MS/s: 128-point FFT, 15 kHz sub-carriers, normal CP\n#\
+      \ ----------------------------------------------------------------------------------------\n\
+      FS = 1.92e6\nNFFT = 128\nSF_LEN = 1920\nFRAME_LEN = 19200\nCP = [10, 9, 9, 9,\
+      \ 9, 9, 9] * 2                       # per symbol in a subframe\nSYM_START =\
+      \ np.concatenate(([0], np.cumsum([c + NFFT for c in CP])[:-1])).astype(int)\n\
+      WIN_START = SYM_START + np.array(CP)                   # FFT window start (no\
+      \ back-off)\nBACKOFF = 2                                            # samples\
+      \ of CP used to dodge ISI\nNPSS_OFFSET = 5 * SF_LEN + SYM_START[3]         \
+      \       # 10012: NPSS start inside a frame\nSHIFT_VEC = np.exp(1j * np.pi *\
+      \ np.arange(NFFT) / NFFT)  # half-subcarrier shift, per window\nCONT_DEROT =\
+      \ np.exp(-1j * np.pi * ((np.arange(140) // 14) * SF_LEN + WIN_START[np.arange(140)\
+      \ % 14]) / NFFT)\nSC_OFFSET = 59                                         # first\
+      \ NB-IoT bin after fftshift\nSI_RNTI = 0xFFFF\n\n\n# ----------------------------------------------------------------------------------------\n\
+      # Generic helpers: Gold sequence, CRC\n# ----------------------------------------------------------------------------------------\n\
+      _gold_cache = {}\n\n\ndef gold(c_init, n):\n    \"\"\"LTE pseudo-random sequence\
+      \ c(0..n-1), 36.211 7.2.\"\"\"\n    key = (int(c_init), int(n))\n    if key\
+      \ in _gold_cache:\n        return _gold_cache[key]\n    nc = 1600\n    tot =\
+      \ n + nc\n    x1 = np.zeros(tot + 31, np.uint8)\n    x2 = np.zeros(tot + 31,\
+      \ np.uint8)\n    x1[0] = 1\n    x2[:31] = [(int(c_init) >> i) & 1 for i in range(31)]\n\
+      \    for i in range(tot):\n        x1[i + 31] = x1[i + 3] ^ x1[i]\n        x2[i\
+      \ + 31] = x2[i + 3] ^ x2[i + 2] ^ x2[i + 1] ^ x2[i]\n    c = (x1[nc:nc + n]\
+      \ ^ x2[nc:nc + n]).astype(np.uint8)\n    if len(_gold_cache) > 4000:\n     \
+      \   _gold_cache.clear()\n    _gold_cache[key] = c\n    return c\n\n\ndef crc_remainder(bits,\
+      \ poly, L):\n    \"\"\"Remainder of bits(x) * x^L / g(x); returns L bits, MSB\
+      \ first. bits: 2-D (H, n) uint8.\"\"\"\n    bits = np.atleast_2d(bits).astype(np.int64)\n\
+      \    reg = np.zeros(bits.shape[0], np.int64)\n    top = 1 << (L - 1)\n    mask\
+      \ = (1 << L) - 1\n    for i in range(bits.shape[1]):\n        fb = ((reg & top)\
+      \ > 0).astype(np.int64) ^ bits[:, i]\n        reg = ((reg << 1) & mask) ^ (fb\
+      \ * poly)\n    return ((reg[:, None] >> np.arange(L - 1, -1, -1)) & 1).astype(np.uint8)\n\
+      \n\nCRC16 = 0x1021      # D^16 + D^12 + D^5 + 1\nCRC24A = 0x864CFB\n\n\ndef\
+      \ bits_to_int(b):\n    v = 0\n    for x in b:\n        v = (v << 1) | int(x)\n\
+      \    return v\n\n\ndef bits_to_bytes(b):\n    b = list(b) + [0] * ((-len(b))\
+      \ % 8)\n    return bytes(bits_to_int(b[i:i + 8]) for i in range(0, len(b), 8))\n\
+      \n\n# ----------------------------------------------------------------------------------------\n\
+      # NPSS (36.211 10.2.7.1) and NSSS (10.2.7.2)\n# ----------------------------------------------------------------------------------------\n\
+      NPSS_COVER = np.array([1, 1, 1, 1, -1, -1, 1, 1, 1, -1, 1])\n\n\ndef npss_freq():\n\
+      \    n = np.arange(11)\n    return np.exp(-1j * np.pi * 5 * n * (n + 1) / 11.0)\n\
+      \n\ndef npss_template(fs=FS, continuous=False):\n    \"\"\"NPSS time waveform\
+      \ (symbols 3..13 of subframe 5 incl. CPs), unit energy.\n    Standalone/guard-band\
+      \ sub-carrier layout: (k - 5.5) * 15 kHz.\n    continuous=False: phase of the\
+      \ 7.5 kHz half-subcarrier offset restarts at every FFT window\n    (srsRAN).\
+      \ continuous=True: the offset runs continuously (an LTE-grid OFDM modulator\
+      \ followed\n    by a +7.5 kHz shift), which adds exp(j*pi*n_win/128) per symbol.\"\
+      \"\"\n    ts = 1.0 / 30.72e6\n    starts, cps, t = [], [], 0.0\n    for l in\
+      \ range(14):\n        ncp = 160 if l % 7 == 0 else 144\n        starts.append(t)\n\
+      \        cps.append(ncp * ts)\n        t += (ncp + 2048) * ts\n    t0, t_end\
+      \ = starts[3], starts[13] + cps[13] + 2048 * ts\n    tt = t0 + np.arange(int(round((t_end\
+      \ - t0) * fs))) / fs\n    f = (np.arange(11) - 5.5) * 15e3\n    d = npss_freq()\n\
+      \    x = np.zeros(len(tt), complex)\n    for i, l in enumerate(range(3, 14)):\n\
+      \        m = (tt >= starts[l] - 1e-12) & (tt < starts[l] + cps[l] + 2048 * ts\
+      \ - 1e-12)\n        tau = tt[m] - starts[l] - cps[l]\n        x[m] = NPSS_COVER[i]\
+      \ * (np.exp(2j * np.pi * np.outer(tau, f)) @ d)\n        if continuous:\n  \
+      \          x[m] *= np.exp(1j * np.pi * 15e3 * (5e-3 + starts[l] + cps[l]))\n\
+      \    return x / np.sqrt(np.sum(np.abs(x) ** 2))\n\n\ndef npss_matched_taps(fs,\
+      \ continuous=False):\n    \"\"\"FIR taps that turn a stock FIR/FFT filter into\
+      \ an NPSS correlator.\"\"\"\n    return list(np.conj(npss_template(fs, continuous)[::-1]))\n\
+      \n\ndef _hadamard_row(r):\n    c = np.arange(128)\n    pc = np.array([bin(r\
+      \ & int(x)).count('1') for x in c])\n    return 1 - 2 * (pc & 1)\n\n\n_BQ =\
+      \ np.array([_hadamard_row(r) for r in (0, 31, 63, 127)])\n\n\ndef nsss_seq(pci,\
+      \ theta_idx):\n    \"\"\"NSSS d(n), n = 0..131. theta_idx = (nf/2) mod 4  ->\
+      \  theta_f = theta_idx/4.\"\"\"\n    n = np.arange(132)\n    u = pci % 126 +\
+      \ 3\n    q = pci // 126\n    npr = n % 131\n    return (_BQ[q][n % 128] * np.exp(-2j\
+      \ * np.pi * (theta_idx / 4.0) * n)\n            * np.exp(-1j * np.pi * u * npr\
+      \ * (npr + 1) / 131.0))\n\n\n_NSSS_BANK = None\n\n\ndef nsss_bank():\n    \"\
+      \"\"(504*4, 11, 12) conjugated NSSS sequences laid out on the grid (k first,\
+      \ then l).\"\"\"\n    global _NSSS_BANK\n    if _NSSS_BANK is None:\n      \
+      \  bank = np.zeros((504 * 4, 11, 12), complex)\n        for p in range(504):\n\
+      \            for th in range(4):\n                bank[p * 4 + th] = np.conj(nsss_seq(p,\
+      \ th)).reshape(11, 12)\n        _NSSS_BANK = bank\n    return _NSSS_BANK\n\n\
+      \n# ----------------------------------------------------------------------------------------\n\
+      # NRS (36.211 10.2.6) and channel estimation\n# ----------------------------------------------------------------------------------------\n\
+      def nrs_k(pci, port, lsym):\n    \"\"\"Sub-carriers of NRS for port 0/1 (2000/2001)\
+      \ in slot-symbol lsym (5 or 6).\"\"\"\n    v = (0 if lsym == 5 else 3) if port\
+      \ == 0 else (3 if lsym == 5 else 0)\n    return [6 * m + (v + pci % 6) % 6 for\
+      \ m in range(2)]\n\n\n_nrs_cache = {}\n\n\ndef nrs_table(pci):\n    \"\"\"{(sf,\
+      \ port): [(l_in_sf, k, value), ...]} for the 10 subframes of a frame.\"\"\"\n\
+      \    if pci in _nrs_cache:\n        return _nrs_cache[pci]\n    tab = {}\n \
+      \   for sf in range(10):\n        for port in range(2):\n            lst = []\n\
+      \            for slot in range(2):\n                ns = 2 * sf + slot\n   \
+      \             for lsym in (5, 6):\n                    c_init = 1024 * (7 *\
+      \ (ns + 1) + lsym + 1) * (2 * pci + 1) + 2 * pci + 1\n                    c\
+      \ = gold(c_init, 2 * 111 + 2)\n                    for m, k in enumerate(nrs_k(pci,\
+      \ port, lsym)):\n                        mp = m + 109\n                    \
+      \    val = ((1 - 2.0 * c[2 * mp]) + 1j * (1 - 2.0 * c[2 * mp + 1])) / np.sqrt(2)\n\
+      \                        lst.append((slot * 7 + lsym, k, val))\n           \
+      \ tab[(sf, port)] = lst\n    _nrs_cache[pci] = tab\n    return tab\n\n\ndef\
+      \ chest(Y, pci, sf, port):\n    \"\"\"Channel estimate for one subframe Y (14,\
+      \ 12) from its NRS.\n    Model per slot: H(l, k) = a(l) * exp(j*beta*k), a(l)\
+      \ linear in time. Returns (H, noise_var, pilot_power).\"\"\"\n    pil = nrs_table(pci)[(sf,\
+      \ port)]\n    l = np.array([p[0] for p in pil])\n    k = np.array([p[1] for\
+      \ p in pil])\n    h = Y[l, k] * np.conj(np.array([p[2] for p in pil]))\n   \
+      \ # frequency slope from the k / k+6 pairs (same symbol)\n    acc = 0j\n   \
+      \ for i in range(0, len(h), 2):\n        acc += h[i + 1] * np.conj(h[i]) * (1\
+      \ if k[i + 1] > k[i] else -1)\n    beta = np.angle(acc) / 6.0\n    hd = h *\
+      \ np.exp(-1j * beta * k)\n    a0 = hd[l < 7].mean()\n    a1 = hd[l >= 7].mean()\n\
+      \    res = np.concatenate((hd[l < 7] - a0, hd[l >= 7] - a1))\n    nvar = max(np.mean(np.abs(res)\
+      \ ** 2) * 4.0 / 3.0, 1e-12)\n    ll = np.arange(14)[:, None]\n    a = a0 + (a1\
+      \ - a0) * (ll - 5.5) / 7.0\n    H = a * np.exp(1j * beta * np.arange(12)[None,\
+      \ :])\n    return H, nvar, np.mean(np.abs(hd) ** 2)\n\n\ndef chest_frame(G,\
+      \ pci, port, sfs):\n    \"\"\"Frequency-selective channel estimate for a whole\
+      \ frame from the NRS in subframes `sfs`.\n    NRS of one port sit on 4 sub-carriers\
+      \ spaced by 3. Per frame (fixed receiver):\n      1. common phase drift w (residual\
+      \ CFO) from pilots 7 symbols apart on the same sub-carrier,\n      2. per-pilot-sub-carrier\
+      \ average (after removing the drift) -> H at 4 frequencies,\n      3. interpolation\
+      \ across the 12 sub-carriers after removing the mean delay slope,\n      4.\
+      \ a common complex linear trend in time.\n    Handles multipath (frequency-selective\
+      \ fading) that a flat/linear-phase model cannot.\n    Returns (H (140, 12),\
+      \ noise variance).\"\"\"\n    tab = nrs_table(pci)\n    t, k, h = [], [], []\n\
+      \    for sf in sfs:\n        for (l, kk, v) in tab[(sf, port)]:\n          \
+      \  t.append(sf * 14 + l)\n            k.append(kk)\n            h.append(G[sf\
+      \ * 14 + l, kk] * np.conj(v))\n    t, k, h = np.array(t, float), np.array(k),\
+      \ np.array(h)\n    hb = h.reshape(-1, 8)                      # per subframe:\
+      \ s0 l5 (m0,m1), s0 l6, s1 l5, s1 l6\n    w = np.angle(np.sum(hb[:, 4:] * np.conj(hb[:,\
+      \ :4]))) / 7.0\n    hd = h * np.exp(-1j * w * t)\n    kp = np.unique(k)    \
+      \                      # 4 pilot sub-carriers\n    Hk = np.array([hd[k == q].mean()\
+      \ for q in kp])\n    # mean delay slope between neighbouring pilot sub-carriers\
+      \ (spacing 3)\n    beta = np.angle(np.sum(Hk[1:] * np.conj(Hk[:-1]))) / 3.0\n\
+      \    Rk = Hk * np.exp(-1j * beta * kp)\n    kk = np.arange(12)\n    re = np.interp(kk,\
+      \ kp, Rk.real, left=np.nan, right=np.nan)\n    im = np.interp(kk, kp, Rk.imag,\
+      \ left=np.nan, right=np.nan)\n    R = re + 1j * im\n    for side in (kk < kp[0],\
+      \ kk > kp[-1]):     # linear extrapolation at the band edges\n        if np.any(side):\n\
+      \            a, b = (0, 1) if side[0] else (-2, -1)\n            slope = (Rk[b]\
+      \ - Rk[a]) / (kp[b] - kp[a])\n            R[side] = Rk[a] + slope * (kk[side]\
+      \ - kp[a])\n    Hf = R * np.exp(1j * beta * kk)\n    # common linear trend in\
+      \ time (amplitude / slow phase), relative to the frame average\n    ratio =\
+      \ hd / Hk[np.searchsorted(kp, k)]\n    tm = t.mean()\n    if len(sfs) >= 3:\n\
+      \        A = np.vstack((np.ones(len(t)), t - tm)).T\n        coef = np.linalg.lstsq(A,\
+      \ ratio, rcond=None)[0]\n    else:\n        coef = np.array([1.0 + 0j, 0j])\n\
+      \    fit = (coef[0] + coef[1] * (t - tm)) * Hk[np.searchsorted(kp, k)]\n   \
+      \ dof = max(len(h) - len(kp) - 2, 1)\n    nvar = max(np.sum(np.abs(hd - fit)\
+      \ ** 2) / dof, 1e-12)\n    tt = np.arange(140)[:, None]\n    H = (coef[0] +\
+      \ coef[1] * (tt - tm)) * Hf[None, :] * np.exp(1j * w * tt)\n    return H, nvar\n\
+      \n\n# ----------------------------------------------------------------------------------------\n\
+      # Equalisation / QPSK soft bits\n# ----------------------------------------------------------------------------------------\n\
+      def equalize(y, h0, h1, nvar, ports):\n    \"\"\"y, h0, h1: RE vectors in mapping\
+      \ order. Returns (soft symbols z scaled as LLR source, display symbols).\"\"\
+      \"\n    if ports == 1:\n        z = y * np.conj(h0)\n        g = np.abs(h0)\
+      \ ** 2\n    else:\n        # SFBC pair: ya = h0a x0 - h1a x1*,  yb* = h1b* x0\
+      \ + h0b* x1*  -> exact 2x2 solve per pair\n        # (no \"same channel on both\
+      \ REs\" assumption, so it holds under multipath)\n        ya, yb = y[0::2],\
+      \ y[1::2]\n        h0a, h0b, h1a, h1b = h0[0::2], h0[1::2], h1[0::2], h1[1::2]\n\
+      \        a, b, c, d = h0a, -h1a, np.conj(h1b), np.conj(h0b)\n        det = a\
+      \ * d - b * c\n        det = np.where(np.abs(det) < 1e-15, 1e-15, det)\n   \
+      \     x0 = (d * ya - b * np.conj(yb)) / det\n        x1 = np.conj((-c * ya +\
+      \ a * np.conj(yb)) / det)\n        v0 = (np.abs(d) ** 2 + np.abs(b) ** 2) /\
+      \ np.abs(det) ** 2       # noise enhancement\n        v1 = (np.abs(c) ** 2 +\
+      \ np.abs(a) ** 2) / np.abs(det) ** 2\n        disp = np.empty(len(y), complex)\n\
+      \        disp[0::2], disp[1::2] = x0, x1\n        v = np.empty(len(y))\n   \
+      \     v[0::2], v[1::2] = v0, v1\n        return disp / (v * nvar), disp\n  \
+      \  disp = z / np.maximum(g, 1e-15)\n    return z / nvar, disp\n\n\ndef qpsk_llr(z):\n\
+      \    \"\"\"LLR = log P(0)/P(1); bit order b(2i) on I, b(2i+1) on Q.\"\"\"\n\
+      \    out = np.empty(2 * len(z))\n    out[0::2] = z.real\n    out[1::2] = z.imag\n\
+      \    return out\n\n\ndef snr_db(z):\n    \"\"\"Blind M2M4 SNR estimate of equalised\
+      \ QPSK symbols (dB); about -20 for pure noise.\"\"\"\n    z = np.asarray(z)\n\
+      \    m2 = np.mean(np.abs(z) ** 2)\n    m4 = np.mean(np.abs(z) ** 4)\n    sig\
+      \ = np.sqrt(max(2 * m2 * m2 - m4, 0.0))\n    return 10 * np.log10(sig / max(m2\
+      \ - sig, 1e-12 * m2) + 1e-2)\n\n\n# ----------------------------------------------------------------------------------------\n\
+      # Tail-biting convolutional code (36.212 5.1.3.1) and rate matching (5.1.4.2)\n\
+      # ----------------------------------------------------------------------------------------\n\
+      _POLY = (0x6D, 0x4F, 0x57)        # 133, 171, 165 octal, newest bit = LSB\n\n\
+      \ndef _parity(x):\n    return bin(x).count('1') & 1\n\n\ndef conv_encode(bits):\n\
+      \    bits = list(bits)\n    sr = 0\n    for b in bits[-6:]:\n        sr = (sr\
+      \ << 1) | b\n    out = []\n    for b in bits:\n        sr = ((sr << 1) | b)\
+      \ & 0x7F\n        out += [_parity(sr & p) for p in _POLY]\n    return np.array(out,\
+      \ np.uint8)\n\n\n# trellis: next state ns = ((s << 1) | b) & 63; predecessors\
+      \ p0 = ns >> 1, p1 = p0 | 32\n_NS = np.arange(64)\n_P0 = _NS >> 1\n_P1 = _P0\
+      \ | 32\n_S0 = np.array([[1 - 2 * _parity((((p << 1) | (ns & 1)) & 0x7F) & q)\
+      \ for q in _POLY]\n                for ns, p in zip(_NS, _P0)], float)\n_S1\
+      \ = np.array([[1 - 2 * _parity((((p << 1) | (ns & 1)) & 0x7F) & q) for q in\
+      \ _POLY]\n                for ns, p in zip(_NS, _P1)], float)\n\n\ndef viterbi_tb(llr):\n\
+      \    \"\"\"Batched wrap-around Viterbi for the LTE tail-biting code.\n    llr:\
+      \ (H, 3*L) with LLR>0 meaning bit 0. Returns (H, L) uint8.\"\"\"\n    llr =\
+      \ np.atleast_2d(llr)\n    H, n3 = llr.shape\n    L = n3 // 3\n    r = llr.reshape(H,\
+      \ L, 3)\n    W = min(L, 96)\n    ext = np.concatenate((r[:, L - W:], r, r[:,\
+      \ :W]), axis=1)\n    T = ext.shape[1]\n    M = np.zeros((H, 64))\n    dec =\
+      \ np.zeros((T, H, 64), bool)\n    for t in range(T):\n        bm0 = ext[:, t]\
+      \ @ _S0.T\n        bm1 = ext[:, t] @ _S1.T\n        m0 = M[:, _P0] + bm0\n \
+      \       m1 = M[:, _P1] + bm1\n        d = m1 > m0\n        dec[t] = d\n    \
+      \    M = np.where(d, m1, m0)\n        M -= M.max(axis=1, keepdims=True)\n  \
+      \  st = np.argmax(M, axis=1)\n    bits = np.zeros((H, T), np.uint8)\n    hidx\
+      \ = np.arange(H)\n    for t in range(T - 1, -1, -1):\n        bits[:, t] = st\
+      \ & 1\n        st = (st >> 1) | (dec[t, hidx, st].astype(int) << 5)\n    return\
+      \ bits[:, W:W + L]\n\n\n_PERM_CC = [1, 17, 9, 25, 5, 21, 13, 29, 3, 19, 11,\
+      \ 27, 7, 23, 15, 31,\n            0, 16, 8, 24, 4, 20, 12, 28, 2, 18, 10, 26,\
+      \ 6, 22, 14, 30]\n_rm_cache = {}\n\n\ndef rm_conv_map(D, E):\n    \"\"\"Index\
+      \ (into the 3*D interleaved coded bits d[3i+s]) of each of the E rate-matched\
+      \ bits.\"\"\"\n    key = (D, E)\n    if key in _rm_cache:\n        return _rm_cache[key]\n\
+      \    nrows = (D - 1) // 32 + 1\n    kp = nrows * 32\n    nd = kp - D\n    w\
+      \ = []\n    for s in range(3):\n        for j in range(32):\n            for\
+      \ i in range(nrows):\n                pos = i * 32 + _PERM_CC[j]\n         \
+      \       w.append(-1 if pos < nd else (pos - nd) * 3 + s)\n    w = [x for x in\
+      \ w if x >= 0]\n    idx = np.array([w[k % len(w)] for k in range(E)])\n    _rm_cache[key]\
+      \ = idx\n    return idx\n\n\ndef rm_conv_rx(llr_e, D):\n    \"\"\"Soft de-rate-matching:\
+      \ combine all repetitions. llr_e (..., E) -> (..., 3D).\"\"\"\n    llr_e = np.atleast_2d(llr_e)\n\
+      \    idx = rm_conv_map(D, llr_e.shape[1])\n    out = np.zeros((llr_e.shape[0],\
+      \ 3 * D))\n    for h in range(llr_e.shape[0]):\n        np.add.at(out[h], idx,\
+      \ llr_e[h])\n    return out\n\n\n# ----------------------------------------------------------------------------------------\n\
+      # NPBCH / MIB-NB (36.211 10.2.4, 36.212 6.4.1, 36.331 MasterInformationBlock-NB)\n\
+      # ----------------------------------------------------------------------------------------\n\
+      def npbch_re(pci):\n    \"\"\"(l, k) of the 100 NPBCH REs in subframe 0, in\
+      \ mapping order (k first, then l).\n    Always skips 4-port LTE CRS and 2-port\
+      \ NRS positions.\"\"\"\n    out = []\n    for l in range(3, 14):\n        for\
+      \ k in range(12):\n            if l in (3, 9, 10) or k % 3 != pci % 3:\n   \
+      \             out.append((l, k))\n    return out\n\n\ndef npbch_rotation(pci,\
+      \ nf8):\n    \"\"\"Rel-14 per-frame symbol rotation theta_f(i), i = 0..99.\"\
+      \"\"\n    c = gold((pci + 1) * (nf8 + 1) ** 3 * 512 + pci, 200)\n    lut = np.array([1,\
+      \ -1, 1j, -1j])\n    return lut[2 * c[0::2] + c[1::2]]\n\n\nOPMODE = ['inband-SamePCI',\
+      \ 'inband-DifferentPCI', 'guardband', 'standalone']\n\n\ndef parse_mib(b):\n\
+      \    b = [int(x) for x in b]\n    m = {'sfn_msb': bits_to_int(b[0:4]), 'hsfn_lsb':\
+      \ bits_to_int(b[4:6]),\n         'sched_sib1': bits_to_int(b[6:10]), 'value_tag':\
+      \ bits_to_int(b[10:15]),\n         'ab_enabled': b[15], 'opmode': OPMODE[bits_to_int(b[16:18])],\n\
+      \         'opmode_bits': b[18:23], 'add_tx_sib1': b[23], 'spare': b[24:34]}\n\
+      \    if m['opmode'] == 'inband-SamePCI':\n        m['eutra_crs_seq'] = bits_to_int(b[18:23])\n\
+      \    elif m['opmode'] == 'inband-DifferentPCI':\n        m['eutra_num_crs_ports']\
+      \ = 'four' if b[18] else 'same'\n        m['raster_offset'] = ['khz-7dot5',\
+      \ 'khz-2dot5', 'khz2dot5', 'khz7dot5'][bits_to_int(b[19:21])]\n    elif m['opmode']\
+      \ == 'guardband':\n        m['raster_offset'] = ['khz-7dot5', 'khz-2dot5', 'khz2dot5',\
+      \ 'khz7dot5'][bits_to_int(b[18:20])]\n    return m\n\n\nSIB1_REP = [4, 8, 16]\
+      \ * 4\nSIB1_TBS = [208] * 3 + [328] * 3 + [440] * 3 + [680] * 3\n\n\ndef sib1_start_frame(pci,\
+      \ nrep):\n    if nrep == 4:\n        return [0, 16, 32, 48][pci % 4]\n    if\
+      \ nrep == 8:\n        return [0, 16][pci % 2]\n    return [0, 1][pci % 2]\n\n\
+      \ndef sib1_frames(pci, sched):\n    \"\"\"{sfn mod 256: (repetition r, subframe-in-codeword\
+      \ j)} carrying SIB1-NB (in subframe 4).\"\"\"\n    nrep = SIB1_REP[sched]\n\
+      \    s0 = sib1_start_frame(pci, nrep)\n    out = {}\n    for r in range(nrep):\n\
+      \        for j in range(8):\n            out[(s0 + r * 256 // nrep + 2 * j)\
+      \ % 256] = (r, j)\n    return out\n\n\n# ----------------------------------------------------------------------------------------\n\
+      # NPDSCH (36.211 10.2.3, 36.212 6.4.2)\n# ----------------------------------------------------------------------------------------\n\
+      def npdsch_re(pci, ports, l_start=0):\n    out = []\n    for l in range(l_start,\
+      \ 14):\n        skip = set()\n        if l % 7 in (5, 6):\n            for p\
+      \ in range(ports):\n                skip.update(nrs_k(pci, p, l % 7))\n    \
+      \    out += [(l, k) for k in range(12) if k not in skip]\n    return out\n\n\
+      \ndef bcch_cinit(variant, pci, nf, sf):\n    if variant == 'r14':\n        return\
+      \ (SI_RNTI << 15) + (pci + 1) * ((nf % 61) + 1)\n    return (SI_RNTI << 14)\
+      \ + ((nf % 2) << 13) + (sf << 9) + pci     # floor(ns/2) = subframe\n\n\ndef\
+      \ tbcc_decode(llr_e, tbs, crc_poly=CRC24A, crc_len=24):\n    \"\"\"De-rate-match,\
+      \ Viterbi, CRC. Returns (ok, payload bits).\"\"\"\n    D = tbs + crc_len\n \
+      \   soft = rm_conv_rx(llr_e, D)\n    bits = viterbi_tb(soft)[0]\n    rem = crc_remainder(bits[None,\
+      \ :tbs], crc_poly, crc_len)[0]\n    return bool(np.all(rem == bits[tbs:])),\
+      \ bits[:tbs]\n\n\n# ----------------------------------------------------------------------------------------\n\
+      # ASN.1 (optional pycrate)\n# ----------------------------------------------------------------------------------------\n\
+      _asn = None\n\n\ndef asn():\n    global _asn\n    if _asn is None:\n       \
+      \ try:\n            from pycrate_asn1dir import RRCLTE\n            _asn = RRCLTE.NBIOT_RRC_Definitions.BCCH_DL_SCH_Message_NB\n\
+      \        except Exception:\n            _asn = False\n    return _asn\n\n\n\
+      def decode_bcch(payload_bytes):\n    \"\"\"Returns (text, value) or (None, None)\
+      \ if pycrate is missing / decoding fails.\"\"\"\n    M = asn()\n    if not M:\n\
+      \        return None, None\n    try:\n        M.from_uper(payload_bytes)\n \
+      \       return M.to_asn1(), M.get_val()\n    except Exception as e:\n      \
+      \  return 'ASN.1 decode error: %s' % e, None\n\n\nSI_PERIOD = [64, 128, 256,\
+      \ 512, 1024, 2048, 4096]\nSI_REP = [2, 4, 8, 16]\nSI_TB = [56, 120, 208, 256,\
+      \ 328, 440, 552, 680]\nSI_WIN = [16, 32, 48, 64, 96, 128, 160]   # frames\n\n\
+      \ndef _enum_idx(v, prefix_list):\n    return prefix_list.index(v)\n\n\ndef sib1_schedule(val):\n\
+      \    \"\"\"Extract what the SI-message scheduler needs from a decoded SIB1-NB\
+      \ value.\"\"\"\n    sib = val['message'][1][1]\n    per = ['rf64', 'rf128',\
+      \ 'rf256', 'rf512', 'rf1024', 'rf2048', 'rf4096']\n    rep = ['every2ndRF',\
+      \ 'every4thRF', 'every8thRF', 'every16thRF']\n    tb = ['b56', 'b120', 'b208',\
+      \ 'b256', 'b328', 'b440', 'b552', 'b680']\n    win = ['ms160', 'ms320', 'ms480',\
+      \ 'ms640', 'ms960', 'ms1280', 'ms1600']\n    entries = []\n    for e in sib['schedulingInfoList-r13']:\n\
+      \        entries.append({'T': SI_PERIOD[per.index(e['si-Periodicity-r13'])],\n\
+      \                        'rep': SI_REP[rep.index(e['si-RepetitionPattern-r13'])],\n\
+      \                        'tbs': SI_TB[tb.index(e['si-TB-r13'])],\n         \
+      \               'sibs': list(e.get('sib-MappingInfo-r13', []))})\n    bitmap\
+      \ = None\n    if 'downlinkBitmap-r13' in sib:\n        kind, bs = sib['downlinkBitmap-r13']\n\
+      \        nb = 10 if kind == 'subframePattern10-r13' else 40\n        v, ln =\
+      \ bs\n        bitmap = [(v >> (ln - 1 - i)) & 1 for i in range(nb)]\n    hs\
+      \ = sib['hyperSFN-MSB-r13']\n    return {'entries': entries, 'win': SI_WIN[win.index(sib['si-WindowLength-r13'])],\n\
+      \            'offset': sib.get('si-RadioFrameOffset-r13', 0), 'bitmap': bitmap,\n\
+      \            'hsfn_msb': hs[0] >> (hs[1] - 8) if hs[1] >= 8 else hs[0]}\n\n\n\
+      # ----------------------------------------------------------------------------------------\n\
+      # Front end: NPSS acquisition / tracking, CFO, CP removal  ->  140 x 128 per\
+      \ frame\n# ----------------------------------------------------------------------------------------\n\
+      class Sync(object):\n    MODES = ('per-symbol', 'continuous')\n\n    def __init__(self,\
+      \ cfo_span=12000.0, cfo_step=250.0, acq_frames=4, log=print):\n        self.log\
+      \ = log\n        self.tpl = {m: (npss_template(240e3, m == 'continuous'), npss_template(FS,\
+      \ m == 'continuous'))\n                    for m in self.MODES}\n        self.mode\
+      \ = 'per-symbol'\n        self.t240, self.t1920 = self.tpl[self.mode]\n    \
+      \    self.cfo_hyp = np.arange(-cfo_span, cfo_span + 1, cfo_step)\n        self.acq_frames\
+      \ = acq_frames\n        # per-symbol segments of the full-rate template (for\
+      \ CFO from phase slope)\n        ts = 1.0 / 30.72e6\n        b = [int(round((SYM_START[l]\
+      \ - SYM_START[3]))) for l in range(3, 14)] + [len(self.t1920)]\n        self.seg\
+      \ = [(b[i], b[i + 1]) for i in range(11)]\n        self.seg_t = np.array([(s\
+      \ + e) / 2.0 for s, e in self.seg]) / FS\n        self.reset()\n\n    def reset(self):\n\
+      \        self.buf = np.zeros(0, np.complex64)\n        self.buf0 = 0       \
+      \          # absolute index of buf[0]\n        self.locked = False\n       \
+      \ self.cfo = 0.0\n        self.phase = 0.0\n        self.next_start = 0\n  \
+      \      self.tacc = 0.0\n        self.misses = 0\n        self.seq = 0\n    \
+      \    self.thr = 0.0\n        self.last = None              # (mode, cfo) of\
+      \ the previous lock\n        self.fails = 0\n        self.epoch = 0\n\n    #\
+      \ --- helpers\n    def _npss_measure(self, x, nom):\n        \"\"\"x: CFO-corrected\
+      \ samples; nom: nominal NPSS start in x. Returns (metric, delta, cfo_res).\"\
+      \"\"\n        L = len(self.t1920)\n        best = (-1, 0)\n        cs = {}\n\
+      \        for d in range(-3, 4):\n            seg = x[nom + d: nom + d + L]\n\
+      \            if len(seg) < L:\n                continue\n            c = np.vdot(self.t1920,\
+      \ seg)\n            e = np.vdot(seg, seg).real + 1e-20\n            cs[d] =\
+      \ abs(c) ** 2 / e\n            if cs[d] > best[0]:\n                best = (cs[d],\
+      \ d)\n        m, d = best\n        frac = 0.0\n        if d - 1 in cs and d\
+      \ + 1 in cs:\n            a, b0, c = cs[d - 1], cs[d], cs[d + 1]\n         \
+      \   den = a - 2 * b0 + c\n            if den < 0:\n                frac = 0.5\
+      \ * (a - c) / den\n        seg = x[nom + d: nom + d + L]\n        r = np.array([np.vdot(self.t1920[s:e],\
+      \ seg[s:e]) for s, e in self.seg])\n        acc = np.sum(r[1:] * np.conj(r[:-1]))\n\
+      \        dt = np.mean(np.diff(self.seg_t))\n        cfo_res = np.angle(acc)\
+      \ / (2 * np.pi * dt)\n        return m, d + frac, cfo_res\n\n    def _acquire(self):\n\
+      \        need = self.acq_frames * FRAME_LEN + 2 * len(self.t1920)\n        if\
+      \ len(self.buf) < need:\n            return False\n        x = self.buf[:need]\n\
+      \        y = x[::8]                                  # 240 kS/s (input is already\
+      \ low-passed)\n        P = 2400\n        # After a first lock, re-acquire cheaply\
+      \ around the last CFO with the known model.\n        narrow = self.last is not\
+      \ None and self.fails < 3\n        if narrow:\n            modes = (self.last[0],)\n\
+      \            span = (self.last[1] - 1500.0, self.last[1] + 1500.0)\n       \
+      \ else:\n            modes = self.MODES\n            span = (self.cfo_hyp[0],\
+      \ self.cfo_hyp[-1])\n        best = (0, 0, 0, 0, modes[0])\n        L = len(self.t240)\n\
+      \        nfft = 1 << int(np.ceil(np.log2(len(y) + L)))\n        df = 240e3 /\
+      \ nfft\n        Y = np.fft.fft(y, nfft)\n        e = np.convolve(np.abs(y) **\
+      \ 2, np.ones(L))[L - 1:len(y)] + 1e-20\n        step = max(1, int(round(250.0\
+      \ / df)))\n        ks = np.arange(int(np.ceil(span[0] / df)), int(np.floor(span[1]\
+      \ / df)) + 1, step)\n        base = np.arange(nfft)\n        for mode in modes:\n\
+      \            Tf = np.fft.fft(np.conj(self.tpl[mode][0][::-1]), nfft)\n     \
+      \       for c0 in range(0, len(ks), 24):                      # CFO = cyclic\
+      \ bin shift, batched\n                kk = ks[c0:c0 + 24]\n                C\
+      \ = np.fft.ifft(Y[(base[None, :] + kk[:, None]) % nfft] * Tf[None, :], axis=1)[:,\
+      \ L - 1:len(y)]\n                M = np.abs(C) ** 2 / e[None, :]\n         \
+      \       nf = M.shape[1] // P\n                F = M[:, :nf * P].reshape(len(kk),\
+      \ nf, P).mean(1)\n                h, i = np.unravel_index(int(np.argmax(F)),\
+      \ F.shape)\n                if F[h, i] > best[0]:\n                    best\
+      \ = (F[h, i], i, kk[h] * df, F[h, i] / (np.median(F[h]) + 1e-20), mode)\n  \
+      \      pk, i, f, ratio, mode = best\n        if ratio < 12 or pk < 0.02:\n \
+      \           self.fails += 1\n            self.log('[sync] searching... best\
+      \ NPSS metric %.3f (ratio %.1f) at CFO %+.0f Hz, %s model'\n               \
+      \      % (pk, ratio, f, mode))\n            drop = self.acq_frames * FRAME_LEN\
+      \ // 2\n            self.buf = self.buf[drop:]\n            self.buf0 += drop\n\
+      \            return False\n        # fine timing / CFO at full rate around the\
+      \ coarse position (first occurrence)\n        self.mode = mode\n        self.t240,\
+      \ self.t1920 = self.tpl[mode]\n        nom = 8 * i\n        nfull = np.arange(len(x))\n\
+      \        xc = x * np.exp(-2j * np.pi * f * nfull / FS)\n        best2 = (-1,\
+      \ 0)\n        L1 = len(self.t1920)\n        for d in range(-12, 13):\n     \
+      \       s = nom + d\n            if s < 0 or s + L1 > len(xc):\n           \
+      \     continue\n            c = abs(np.vdot(self.t1920, xc[s:s + L1])) ** 2\
+      \ / (np.vdot(xc[s:s + L1], xc[s:s + L1]).real + 1e-20)\n            if c > best2[0]:\n\
+      \                best2 = (c, s)\n        m1, s = best2\n        _, _, cfo_res\
+      \ = self._npss_measure(xc, s)\n        self.cfo = f + cfo_res\n        start\
+      \ = s - NPSS_OFFSET\n        while start < 0:\n            start += FRAME_LEN\n\
+      \        self.next_start = self.buf0 + start\n        self.phase = -2 * np.pi\
+      \ * self.cfo * (self.next_start - self.buf0) / FS\n        self.phase_abs =\
+      \ self.next_start\n        self.thr = max(0.25 * m1, 0.02)\n        self.locked\
+      \ = True\n        self.misses = 0\n        self.log('[sync] NPSS found: metric\
+      \ %.2f, CFO %+.1f Hz (%+.2f ppm at 935 MHz), half-subcarrier %s, '\n       \
+      \          'frame start at sample %d' % (m1, self.cfo, self.cfo / 935.0, self.mode,\
+      \ self.next_start))\n        self.mstat = []\n        self.last = (self.mode,\
+      \ self.cfo)\n        self.fails = 0\n        self.epoch += 1\n        self.seq\
+      \ = self.epoch * 1000000            # decoder resets its state when the epoch\
+      \ changes\n        return True\n\n    def feed(self, samples):\n        \"\"\
+      \"Append samples; return list of (frame (140,128) complex64, info dict).\"\"\
+      \"\n        self.buf = np.concatenate((self.buf, np.asarray(samples, np.complex64)))\n\
+      \        out = []\n        while True:\n            if not self.locked:\n  \
+      \              if not self._acquire():\n                    break\n        \
+      \        continue\n            rel = self.next_start - self.buf0\n         \
+      \   need = rel + FRAME_LEN + NFFT\n            if len(self.buf) < need or rel\
+      \ < BACKOFF:\n                if rel < BACKOFF:          # timing moved before\
+      \ buffer start: skip a frame\n                    self.next_start += FRAME_LEN\n\
+      \                    continue\n                break\n            seg = self.buf[rel\
+      \ - BACKOFF: rel + FRAME_LEN + 8]\n            ph = self.phase - 2 * np.pi *\
+      \ self.cfo * (np.arange(len(seg)) - BACKOFF) / FS\n            x = seg * np.exp(1j\
+      \ * ph)\n            m, delta, cfo_res = self._npss_measure(x, BACKOFF + NPSS_OFFSET)\n\
+      \            idx = (np.arange(140) // 14) * SF_LEN + WIN_START[np.arange(140)\
+      \ % 14]\n            frame = np.stack([x[i: i + NFFT] for i in idx])\n     \
+      \       if self.mode == 'continuous':\n                frame = frame * CONT_DEROT[:,\
+      \ None]\n            frame = frame.astype(np.complex64)\n            info =\
+      \ {'seq': self.seq, 'cfo': self.cfo, 'npss': m, 'abs': self.next_start}\n  \
+      \          self.mstat = (getattr(self, 'mstat', []) + [m])[-500:]\n        \
+      \    if self.seq % 500 == 499:\n                self.log('[sync] locked: NPSS\
+      \ metric avg %.2f (min %.2f), CFO %+.1f Hz, %s'\n                         %\
+      \ (np.mean(self.mstat), np.min(self.mstat), self.cfo, self.mode))\n        \
+      \    out.append((frame, info))\n            self.seq += 1\n            # loops\n\
+      \            step = 0\n            if m > self.thr:\n                self.misses\
+      \ = 0\n                self.cfo += 0.3 * cfo_res\n                self.tacc\
+      \ += 0.4 * delta\n                step = int(np.round(self.tacc))\n        \
+      \        self.tacc -= step\n            else:\n                self.misses +=\
+      \ 1\n            adv = FRAME_LEN + step\n            self.phase = (self.phase\
+      \ - 2 * np.pi * self.cfo * adv / FS) % (2 * np.pi)\n            self.next_start\
+      \ += adv\n            if self.misses > 10:\n                self.log('[sync]\
+      \ NPSS lost, re-acquiring')\n                keep = self.next_start - self.buf0\n\
+      \                self.buf = self.buf[max(keep, 0):]\n                self.buf0\
+      \ += max(keep, 0)\n                self.locked = False\n                continue\n\
+      \            drop = self.next_start - self.buf0 - 4 * NFFT\n            if drop\
+      \ > 0:\n                self.buf = self.buf[drop:]\n                self.buf0\
+      \ += drop\n        return out\n\n\n# ----------------------------------------------------------------------------------------\n\
+      # Decoder: NSSS -> PCI, NPBCH -> MIB-NB, NPDSCH -> SIB1-NB -> SI messages\n\
+      # ----------------------------------------------------------------------------------------\n\
+      class Decoder(object):\n    def __init__(self, log=print, msg=None, const=None,\
+      \ vec=None, split_db=None):\n        \"\"\"split_db=None: one 'npdsch' constellation\
+      \ (original flowgraph).\n        split_db=x: per-subframe SINR analysis; NPDSCH\
+      \ symbols go to 'npdsch_clean' (SINR >= x dB)\n        or 'npdsch_dirty', and\
+      \ a 10-value per-subframe SINR vector is sent as vec('sinr', ...).\"\"\"\n \
+      \       self.log = log\n        self.msg = msg or (lambda s: None)        #\
+      \ human-readable output lines\n        self.const = const or (lambda name, z:\
+      \ None)\n        self.vec = vec or (lambda name, v: None)\n        self.split_db\
+      \ = split_db\n        self.sf_sinr = np.full(10, np.nan)\n        self.sinr_hist\
+      \ = []\n        self.reset()\n\n    def reset(self):\n        self.pci = None\n\
+      \        self.cands = []\n        self.pci_frames = 0\n        self.nsss_acc\
+      \ = {0: None, 1: None}\n        self.nsss_cnt = {0: 0, 1: 0}\n        self.par\
+      \ = None                 # seq parity of even frames\n        self.theta_hist\
+      \ = []\n        self.pbch_buf = []              # (seq, y, h0, h1, nvar)\n \
+      \       self.mib = None\n        self.sfn_off = None             # nf = (seq\
+      \ + sfn_off) mod 1024\n        self.hsfn = None\n        self.variant = None\n\
+      \        self.ports = None\n        self.sib1_acc = {}\n        self.sib1_done_period\
+      \ = None\n        self.sib1_text = None\n        self.si = None            \
+      \      # schedule from SIB1\n        self.si_acc = {}\n        self.si_done\
+      \ = set()\n        self.si_seen = {}\n        self.last_mib_bits = None\n  \
+      \      self.frames = 0\n\n    # ----------------------------------------------------------------\
+      \ NSSS / PCI\n    def _nsss(self, G, seq):\n        Y = G[9 * 14 + 3: 9 * 14\
+      \ + 14]                        # (11, 12)\n        B = nsss_bank()\n       \
+      \ col = np.einsum('hlk,lk->hk', B, Y)                   # coherent along time\
+      \ per sub-carrier\n        met = np.sum(np.abs(col) ** 2, axis=1) / (np.sum(np.abs(Y)\
+      \ ** 2) * 11 + 1e-20)\n        p = seq & 1\n        self.nsss_acc[p] = met if\
+      \ self.nsss_acc[p] is None else self.nsss_acc[p] + met\n        self.nsss_cnt[p]\
+      \ += 1\n        if self.nsss_cnt[0] + self.nsss_cnt[1] < 4:\n            return\n\
+      \        best = None\n        for par in (0, 1):\n            a = self.nsss_acc[par]\n\
+      \            if a is None or self.nsss_cnt[par] < 2:\n                continue\n\
+      \            pm = a.reshape(504, 4).max(axis=1) / self.nsss_cnt[par]\n     \
+      \       floor = np.median(pm) + 1e-20\n            order = np.argsort(pm)[::-1]\n\
+      \            score = pm[order[0]] / floor\n            if best is None or score\
+      \ > best[0]:\n                best = (score, par, pm, floor, order)\n      \
+      \  if best is None:\n            return\n        score, par, pm, floor, order\
+      \ = best\n        # Every cell ID clearly above the noise floor is a candidate.\
+      \ Several sectors of one site\n        # often share the carrier at similar\
+      \ levels, so \"best vs 2nd best\" is not a usable test;\n        # the NPBCH\
+      \ CRC (scrambled with the cell ID) decides which candidate is real.\n      \
+      \  cands = [int(q) for q in order[:3] if pm[q] / floor > self.NSSS_THR and pm[q]\
+      \ >= 0.5 * pm[order[0]]]\n        if cands:\n            prev = getattr(self,\
+      \ 'prev_pci', None)\n            if prev in cands:\n                cands.remove(prev)\n\
+      \                cands.insert(0, prev)\n            self.cands, self.par = cands,\
+      \ par\n            self._use_pci(cands[0])\n            others = ', '.join('PCI\
+      \ %d (%.0f%%)' % (q, 100 * pm[q] / pm[cands[0]]) for q in cands[1:])\n     \
+      \       self.log('[nsss] candidate cells: PCI %d (%.1fx noise floor)%s'\n  \
+      \                   % (cands[0], pm[cands[0]] / floor, ('; co-channel: ' + others)\
+      \ if others else ''))\n        elif sum(self.nsss_cnt.values()) % 50 == 0:\n\
+      \            self.log('[nsss] no cell yet (best %.1fx noise floor, need %.1fx)'\
+      \ % (score, self.NSSS_THR))\n            for q in (0, 1):                  \
+      \     # exponential forgetting, keeps long integration\n                if self.nsss_acc[q]\
+      \ is not None:\n                    self.nsss_acc[q] *= 0.5\n              \
+      \      self.nsss_cnt[q] = max(1, self.nsss_cnt[q] // 2)\n\n    NSSS_THR = 2.4\
+      \           # pure noise peaks at ~1.6x the median\n    MIB_TIMEOUT = 96   \
+      \       # frames to wait for a MIB-NB before trying the next candidate cell\n\
+      \n    def _use_pci(self, pci):\n        self.pci = pci\n        self.pci_frames\
+      \ = 0\n        self.pbch_buf = []\n        if pci != getattr(self, 'prev_pci',\
+      \ None) or not getattr(self, '_announced', False):\n            self.msg('Cell\
+      \ found: PCI (N_ID_cell) = %d' % pci\n                     + ('   [co-channel\
+      \ candidates: %s]' % ', '.join(map(str, self.cands[1:]))\n                 \
+      \       if len(self.cands) > 1 else ''))\n            self._announced = True\n\
+      \        self.prev_pci = pci\n\n    # ----------------------------------------------------------------\
+      \ subframe helpers\n    def _nrs_sfs(self, seq):\n        \"\"\"Subframes the\
+      \ UE may assume carry NRS (36.211 10.2.6), for the current stage.\"\"\"\n  \
+      \      odd = (seq & 1) != self.par\n        if self.mib is None or self.mib['opmode'].startswith('inband'):\n\
+      \            sfs = [0, 4]\n        else:\n            sfs = [0, 1, 3, 4]\n \
+      \           if self.si is not None:\n                bm = self.si['bitmap']\n\
+      \                nf = (seq + self.sfn_off) % 1024\n                a = (self.hsfn\
+      \ or 0) * 1024 + nf\n                for sf in (2, 6, 7, 8):\n             \
+      \       if bm is None or bm[(10 * a + sf) % len(bm)]:\n                    \
+      \    sfs.append(sf)\n        if odd:\n            sfs.append(9)\n        return\
+      \ sorted(sfs)\n\n    def _frame_chest(self, G, seq):\n        sfs = self._nrs_sfs(seq)\n\
+      \        self.H0, self.n0 = chest_frame(G, self.pci, 0, sfs)\n        self.H1,\
+      \ self.n1 = chest_frame(G, self.pci, 1, sfs)\n\n    def _sinr_frame(self, G,\
+      \ seq):\n        \"\"\"Per-subframe SINR (dB) of the serving cell: model power\
+      \ / residual power at its NRS.\n        Interference that lands on the NRS in\
+      \ one subframe (a co-channel cell's data burst) shows up\n        here even\
+      \ though the frame-wide channel model is unaffected.\"\"\"\n        sinr = np.full(10,\
+      \ np.nan)\n        tab = nrs_table(self.pci)\n        ports = self.ports or\
+      \ 1\n        for sf in self._nrs_sfs(seq):\n            sig, err = 0.0, 0.0\n\
+      \            for p, H in ((0, self.H0), (1, self.H1))[:ports]:\n           \
+      \     for (l, k, v) in tab[(sf, p)]:\n                    hm = G[sf * 14 + l,\
+      \ k] * np.conj(v)\n                    hp = H[sf * 14 + l, k]\n            \
+      \        sig += abs(hp) ** 2\n                    err += abs(hm - hp) ** 2\n\
+      \            sinr[sf] = 10 * np.log10(sig / max(err, 1e-12 * sig) + 1e-12)\n\
+      \        self.sf_sinr = sinr\n        if self.split_db is None:\n          \
+      \  return\n        self.vec('sinr', np.where(np.isnan(sinr), -10.0, sinr))\n\
+      \        self.sinr_hist = (self.sinr_hist + [sinr])[-500:]\n        if len(self.sinr_hist)\
+      \ == 500 and seq % 500 == 0:\n            A = np.array(self.sinr_hist)\n   \
+      \         cells = []\n            for sf in range(10):\n                col\
+      \ = A[:, sf][~np.isnan(A[:, sf])]\n                if len(col) < 20:\n     \
+      \               cells.append('sf%d   --   ' % sf)\n                    continue\n\
+      \                cells.append('sf%d %4.1f/%4.1f %2d%%' % (sf, np.median(col),\
+      \ np.percentile(col, 10),\n                                                \
+      \       100 * np.mean(col < self.split_db)))\n            self.log('[sinr] last\
+      \ 5 s, per subframe median/10th-pct dB, %% below %.0f dB:  %s'\n           \
+      \          % (self.split_db, '  '.join(cells)))\n\n    def _show_npdsch(self,\
+      \ parts, label):\n        \"\"\"parts: list of (display symbols, subframe SINR\
+      \ dB).\"\"\"\n        if self.split_db is None:\n            self.const('npdsch',\
+      \ np.concatenate([d for d, _ in parts]))\n            return\n        clean\
+      \ = [d for d, q in parts if q >= self.split_db]\n        dirty = [d for d, q\
+      \ in parts if not q >= self.split_db]\n        if clean:\n            self.const('npdsch_clean',\
+      \ np.concatenate(clean))\n        if dirty:\n            self.const('npdsch_dirty',\
+      \ np.concatenate(dirty))\n        self.log('[sinr] %s: subframe SINR %s dB ->\
+      \ %d clean / %d interfered; QPSK SNR clean %s, interfered %s'\n            \
+      \     % (label, ' '.join('%.0f' % q for _, q in parts), len(clean), len(dirty),\n\
+      \                    '%.1f' % snr_db(np.concatenate(clean)) if clean else '--',\n\
+      \                    '%.1f' % snr_db(np.concatenate(dirty)) if dirty else '--'))\n\
+      \n    def _sf_est(self, G, sf, ports):\n        Y = G[sf * 14:(sf + 1) * 14]\n\
+      \        H0 = self.H0[sf * 14:(sf + 1) * 14]\n        H1 = self.H1[sf * 14:(sf\
+      \ + 1) * 14]\n        return Y, H0, H1, (0.5 * (self.n0 + self.n1) if ports\
+      \ == 2 else self.n0)\n\n    # ----------------------------------------------------------------\
+      \ NPBCH\n    def _pbch_collect(self, G, seq):\n        re = npbch_re(self.pci)\n\
+      \        ls = np.array([r[0] for r in re])\n        ks = np.array([r[1] for\
+      \ r in re])\n        Y = G[0:14]\n        H0, H1 = self.H0[0:14], self.H1[0:14]\n\
+      \        self.pbch_buf.append((seq, Y[ls, ks], H0[ls, ks], H1[ls, ks], self.n0,\
+      \ self.n1, 0.0))\n        self.pbch_buf = self.pbch_buf[-64:]\n\n    def _pbch_llr(self,\
+      \ entry, variant, ports, nf8):\n        seq, y, h0, h1, n0, n1, _ = entry\n\
+      \        if variant == 'r14':\n            y = y * np.conj(npbch_rotation(self.pci,\
+      \ nf8))\n        nv = n0 if ports == 1 else 0.5 * (n0 + n1)\n        z, disp\
+      \ = equalize(y, h0, h1, nv, ports)\n        return qpsk_llr(z), disp\n\n   \
+      \ def _pbch_try(self, hyps, min_frames=1):\n        \"\"\"hyps: list of (variant,\
+      \ ports, o) with nf mod 64 = (seq + o) mod 64. Returns decoded or None.\"\"\"\
+      \n        c = gold(self.pci, 1600)\n        sgn = 1.0 - 2.0 * c\n        rows,\
+      \ meta, accs = [], [], []\n        cache = {}\n        last = self.pbch_buf[-1][0]\n\
+      \        for (variant, ports, o) in hyps:\n            acc = np.zeros(1600)\n\
+      \            tti = (last + o) // 64\n            used = 0\n            for e\
+      \ in self.pbch_buf:\n                if (e[0] + o) // 64 != tti:\n         \
+      \           continue\n                nf64 = (e[0] + o) % 64\n             \
+      \   key = (e[0], variant, ports, nf64 % 8 if variant == 'r14' else 0)\n    \
+      \            if key not in cache:\n                    cache[key] = self._pbch_llr(e,\
+      \ variant, ports, nf64 % 8)[0]\n                b = nf64 // 8\n            \
+      \    acc[200 * b:200 * b + 200] += cache[key] * sgn[200 * b:200 * b + 200]\n\
+      \                used += 1\n            if used == 0:\n                continue\n\
+      \            if used < min_frames:\n                continue\n            rows.append(rm_conv_rx(acc[None,\
+      \ :], 50)[0])\n            accs.append(acc)\n            meta.append((variant,\
+      \ ports, o, used))\n        if not rows:\n            return None\n        bits\
+      \ = viterbi_tb(np.array(rows))\n        rem = crc_remainder(bits[:, :34], CRC16,\
+      \ 16)\n        best = None\n        for h, (variant, ports, o, used) in enumerate(meta):\n\
+      \            mask = np.zeros(16, np.uint8) if ports == 1 else np.ones(16, np.uint8)\n\
+      \            if np.all((rem[h] ^ mask) == bits[h, 34:]) and not np.any(bits[h,\
+      \ 24:34]):\n                m = parse_mib(bits[h, :34])\n                if\
+      \ m['sched_sib1'] > 11:\n                    continue\n                # Several\
+      \ alignments can pass CRC (Rel-13 repeats each block for 8 frames).\n      \
+      \          # Keep the one whose re-encoded MIB agrees best with the combined\
+      \ soft bits.\n                cw = conv_encode(bits[h])\n                e =\
+      \ cw[rm_conv_map(50, 1600)]\n                score = float(np.sum(accs[h] *\
+      \ (1.0 - 2.0 * e)))\n                if best is None or score > best[0]:\n \
+      \                   best = (score, (variant, ports, o, used, bits[h, :34], m))\n\
+      \        return best[1] if best else None\n\n    def _pbch(self, seq):\n   \
+      \     if self.mib is None and len(self.pbch_buf) and seq % 8 == 0:\n       \
+      \     # show equalised NPBCH while searching (QPSK even with Rel-14 rotation);\
+      \ guess the\n            # port count from the power seen on the port-1 NRS\
+      \ positions\n            p_guess = 2 if np.mean(np.abs(self.H1) ** 2) > 0.25\
+      \ * np.mean(np.abs(self.H0) ** 2) else 1\n            _, disp = self._pbch_llr(self.pbch_buf[-1],\
+      \ 'r13', p_guess, 0)\n            self.const('npbch', disp)\n            if\
+      \ seq % 200 == 0:\n                self.log('[npbch] searching for MIB-NB: frames\
+      \ %d, NPBCH SNR %.1f dB per frame '\n                         '(about -20 =\
+      \ noise, > 0 = clean QPSK)' % (len(self.pbch_buf), snr_db(disp)))\n        if\
+      \ len(self.pbch_buf) < 8:\n            return\n        if self.mib is None:\n\
+      \            if (seq + 1) % 8:\n                return\n            hyps = [(v,\
+      \ p, o) for v in (('r13', 'r14') if self.variant is None else (self.variant,))\n\
+      \                    for p in (1, 2) for o in range(64) if (o + self.par) %\
+      \ 2 == 0]\n        else:\n            # verify once per TTI using the known\
+      \ alignment\n            if (seq + self.o + 1) % 64:\n                return\n\
+      \            hyps = [(self.variant, self.ports, self.o)]\n        # first acquisition:\
+      \ >= 9 frames so the combined set always straddles a block boundary\n      \
+      \  r = self._pbch_try(hyps, min_frames=9 if self.mib is None else 1)\n     \
+      \   if r is None:\n            if self.mib is not None:\n                self.mib_fail\
+      \ = getattr(self, 'mib_fail', 0) + 1\n                if self.mib_fail >= 4:\n\
+      \                    self.log('[npbch] MIB-NB lost; restarting frame-number\
+      \ search')\n                    self.mib = None\n            return\n      \
+      \  variant, ports, o, used, bits, m = r\n        self.mib_fail = 0\n       \
+      \ nf64 = (seq + o) % 64\n        sfn = (m['sfn_msb'] << 6) | nf64\n        self.sfn_off\
+      \ = (sfn - seq) % 1024\n        first = self.mib is None\n        self.variant,\
+      \ self.ports, self.o, self.mib = variant, ports, o, m\n        self._sib1set\
+      \ = set(sib1_frames(self.pci, m['sched_sib1']).keys())\n        hl = m['hsfn_lsb']\n\
+      \        if self.hsfn is None or (self.hsfn & 3) != hl:\n            self.hsfn\
+      \ = (self.hsfn & ~3 | hl) if self.hsfn is not None else hl\n        # display:\
+      \ last frame's equalised NPBCH symbols\n        _, disp = self._pbch_llr(self.pbch_buf[-1],\
+      \ variant, ports, nf64 % 8)\n        self.const('npbch', disp)\n        self.pbch_snr\
+      \ = float(np.median([snr_db(self._pbch_llr(e, variant, ports, (e[0] + o) % 8)[1])\n\
+      \                                         for e in self.pbch_buf[-8:]]))\n \
+      \       key = tuple(int(x) for x in bits[6:34])\n        if key != self.last_mib_bits:\n\
+      \            self.last_mib_bits = key\n            sib1rep = SIB1_REP[m['sched_sib1']]\n\
+      \            txt = ['MIB-NB  (%s, %d NRS port%s, combined %d frames, NPBCH SNR\
+      \ %.1f dB)' % (\n                       'Rel-14 rotation' if variant == 'r14'\
+      \ else 'Rel-13', ports, 's' if ports > 1 else '', used,\n                  \
+      \     self.pbch_snr),\n                   '  SFN = %d   (systemFrameNumber-MSB\
+      \ %d, H-SFN LSBs %d)' % (sfn, m['sfn_msb'], m['hsfn_lsb']),\n              \
+      \     '  schedulingInfoSIB1 = %d  ->  SIB1-NB TBS %d bits, %d repetitions, start\
+      \ frame %d'\n                   % (m['sched_sib1'], SIB1_TBS[m['sched_sib1']],\
+      \ sib1rep, sib1_start_frame(self.pci, sib1rep)),\n                   '  systemInfoValueTag\
+      \ = %d   ab-Enabled = %s   additionalTransmissionSIB1 = %s'\n              \
+      \     % (m['value_tag'], bool(m['ab_enabled']), bool(m['add_tx_sib1'])),\n \
+      \                  '  operationModeInfo = %s %s' % (m['opmode'], {k: v for k,\
+      \ v in m.items()\n                                                    if k in\
+      \ ('eutra_crs_seq', 'eutra_num_crs_ports', 'raster_offset')})]\n           \
+      \ self.msg('\\n'.join(txt))\n            self.log('[npbch] ' + ' | '.join(t.strip()\
+      \ for t in txt))\n\n    # ----------------------------------------------------------------\
+      \ NPDSCH (BCCH)\n    def _pdsch_soft(self, G, sf, nf):\n        \"\"\"Soft bits\
+      \ of one NPDSCH subframe (BCCH). Returns (llr, disp).\"\"\"\n        l0 = 3\
+      \ if self.mib['opmode'].startswith('inband') else 0\n        re = npdsch_re(self.pci,\
+      \ self.ports, l0)\n        ls = np.array([r[0] for r in re])\n        ks = np.array([r[1]\
+      \ for r in re])\n        Y, H0, H1, nv = self._sf_est(G, sf, self.ports)\n \
+      \       z, disp = equalize(Y[ls, ks], H0[ls, ks], H1[ls, ks], nv, self.ports)\n\
+      \        return qpsk_llr(z), disp\n\n    def _descramble_try(self, parts, tbs):\n\
+      \        \"\"\"parts: list of (llr_concat, first_nf, first_sf). Combine with\
+      \ each scrambling variant.\"\"\"\n        order = [self.variant, 'r13' if self.variant\
+      \ == 'r14' else 'r14']\n        for v in order:\n            acc = None\n  \
+      \          for llr, nf, sf in parts:\n                c = gold(bcch_cinit(v,\
+      \ self.pci, nf, sf), len(llr))\n                x = llr * (1.0 - 2.0 * c)\n\
+      \                acc = x if acc is None else acc + x\n            ok, bits =\
+      \ tbcc_decode(acc[None, :], tbs)\n            if ok:\n                return\
+      \ v, bits\n        return None, None\n\n    def _sib1(self, G, nf):\n      \
+      \  if self.mib['opmode'].startswith('inband'):\n            if not getattr(self,\
+      \ '_inband_note', False):\n                self._inband_note = True\n      \
+      \          self.msg('In-band cell: this decoder stops at MIB-NB (SIB decoding\
+      \ needs the LTE CRS '\n                         'puncturing, not implemented).\
+      \ Standalone and guard-band cells are fully decoded.')\n            return\n\
+      \        sched = self.mib['sched_sib1']\n        tab = sib1_frames(self.pci,\
+      \ sched)\n        key = nf % 256\n        if key not in tab:\n            return\n\
+      \        r, j = tab[key]\n        period = ((self.hsfn or 0) * 1024 + nf - key)\
+      \ // 256\n        llr, disp = self._pdsch_soft(G, 4, nf)\n        ent = self.sib1_acc.setdefault((period,\
+      \ r), {'parts': {}, 'nf0': nf - 2 * j})\n        ent['parts'][j] = (llr, disp,\
+      \ self.sf_sinr[4])\n        if len(ent['parts']) < 8:\n            return\n\
+      \        if self.sib1_done_period == period:\n            return\n        #\
+      \ all repetitions of this period that are complete\n        parts = []\n   \
+      \     for (pp, rr), e in sorted(self.sib1_acc.items()):\n            if period\
+      \ - 4 < pp <= period and len(e['parts']) == 8 and pp != self.sib1_done_period:\n\
+      \                parts.append((np.concatenate([e['parts'][i][0] for i in range(8)]),\
+      \ e['nf0'] % 1024, 4))\n        self._show_npdsch([(ent['parts'][i][1], ent['parts'][i][2])\
+      \ for i in range(8)],\n                          'SIB1-NB repetition @SFN %d'\
+      \ % (ent['nf0'] % 1024))\n        v, bits = self._descramble_try(parts, SIB1_TBS[sched])\n\
+      \        self.sib1_acc = {k: e for k, e in self.sib1_acc.items() if k[0] > period\
+      \ - 4}\n        if v is None:\n            self.log('[sib1] period %d: CRC failed\
+      \ after %d repetition(s)' % (period, len(parts)))\n            return\n    \
+      \    self.sib1_done_period = period\n        self.sib1_acc = {k: e for k, e\
+      \ in self.sib1_acc.items() if k[0] > period}\n        pb = bits_to_bytes(bits)\n\
+      \        text, val = decode_bcch(pb)\n        hdr = 'SIB1-NB  (%d repetition%s\
+      \ combined, %s scrambling)  payload %s' % (\n            len(parts), 's' if\
+      \ len(parts) > 1 else '', v, pb.hex())\n        if text is None:\n         \
+      \   if pb != getattr(self, 'sib1_hex', None):\n                self.sib1_hex\
+      \ = pb\n                self.msg(hdr + '\\n  (install pycrate to decode the\
+      \ ASN.1 and the SI messages:  '\n                         'radioconda\\\\python.exe\
+      \ -m pip install pycrate)')\n            return\n        if text != self.sib1_text:\n\
+      \            self.sib1_text = text\n            self.msg(hdr + '\\n' + text)\n\
+      \        if val is not None:\n            try:\n                sch = sib1_schedule(val)\n\
+      \                old = self.hsfn\n                self.hsfn = (sch['hsfn_msb']\
+      \ << 2) | (self.mib['hsfn_lsb'])\n                if self.si is None or sch\
+      \ != self.si:\n                    self.si = sch\n                    self.log('[sib1]\
+      \ SI schedule: %s' % sch)\n            except Exception as e:\n            \
+      \    self.log('[sib1] could not read SI schedule: %s' % e)\n\n    # ----------------------------------------------------------------\
+      \ SI messages\n    def _valid_sf(self, a, sf):\n        \"\"\"a = absolute frame\
+      \ count (H-SFN*1024 + SFN).\"\"\"\n        nf = a % 1024\n        if sf == 0\
+      \ or sf == 5 or (sf == 9 and nf % 2 == 0):\n            return False\n     \
+      \   if sf in (3, 4) and (nf % 256) in self._sib1set:\n            if sf == 4\
+      \ or self.mib.get('add_tx_sib1'):       # Rel-15 additional SIB1 copies use\
+      \ subframe 3\n                return False\n        bm = self.si['bitmap'] if\
+      \ self.si else None\n        if bm is not None:\n            return bool(bm[(10\
+      \ * a + sf) % len(bm)])\n        return True\n\n    def _si_map(self, a):\n\
+      \        \"\"\"{sf: (entry n, window start w0, tx j, index in codeword)} for\
+      \ absolute frame a.\"\"\"\n        res = {}\n        for n, e in enumerate(self.si['entries']):\n\
+      \            nsf = 2 if e['tbs'] <= 120 else 8\n            base = n * self.si['win']\
+      \ + self.si['offset']      # floor(x/10) + offset, x = (n-1)*w\n           \
+      \ T, rep, win = e['T'], e['rep'], self.si['win']\n            w0 = a - ((a -\
+      \ base) % T)\n            if a - w0 >= win + 4:\n                continue\n\
+      \            for s in range(max(w0, a - 4), a + 1):           # a codeword spans\
+      \ <= 4 frames\n                if (s - w0) % rep or s >= w0 + win:\n       \
+      \             continue\n                cnt, aa, sf = 0, s, 0\n            \
+      \    while cnt < nsf and aa <= a:\n                    if self._valid_sf(aa,\
+      \ sf):\n                        if aa == a:\n                            res[sf]\
+      \ = (n, w0, (s - w0) // rep, cnt)\n                        cnt += 1\n      \
+      \              sf += 1\n                    if sf == 10:\n                 \
+      \       sf, aa = 0, aa + 1\n        return res\n\n    def _si(self, G, nf):\n\
+      \        if self.si is None or self.hsfn is None:\n            return\n    \
+      \    a = self.hsfn * 1024 + nf\n        for sf, (n, w0, j, idx) in sorted(self._si_map(a).items()):\n\
+      \            e = self.si['entries'][n]\n            if (n, w0) in self.si_done:\n\
+      \                continue\n            llr, disp = self._pdsch_soft(G, sf, nf)\n\
+      \            ent = self.si_acc.setdefault((n, w0, j), {'parts': {}, 'start':\
+      \ None})\n            if idx == 0:\n                ent['start'] = (nf, sf)\n\
+      \            ent['parts'][idx] = (llr, disp, self.sf_sinr[sf])\n           \
+      \ nsf = 2 if e['tbs'] <= 120 else 8\n            if len(ent['parts']) == nsf\
+      \ and ent['start'] is not None:\n                parts = []\n              \
+      \  for (nn, ww, jj), ee in sorted(self.si_acc.items()):\n                  \
+      \  if nn == n and ww == w0 and len(ee['parts']) == nsf and ee['start'] is not\
+      \ None:\n                        parts.append((np.concatenate([ee['parts'][i][0]\
+      \ for i in range(nsf)]),\n                                      ee['start'][0],\
+      \ ee['start'][1]))\n                self._show_npdsch([(ent['parts'][i][1],\
+      \ ent['parts'][i][2]) for i in range(nsf)],\n                              \
+      \    'SI-message %d @SFN %d' % (n + 1, ent['start'][0]))\n                v,\
+      \ bits = self._descramble_try(parts, e['tbs'])\n                if v is None:\n\
+      \                    if len(parts) in (1, 4, 16):\n                        self.log('[si]\
+      \ SI-message %d (window @%d): CRC failed, %d transmission(s) combined'\n   \
+      \                              % (n + 1, w0, len(parts)))\n                \
+      \    continue\n                self.si_done.add((n, w0))\n                self.si_acc\
+      \ = {k: x for k, x in self.si_acc.items() if not (k[0] == n and k[1] == w0)}\n\
+      \                pb = bits_to_bytes(bits)\n                if self.si_seen.get(n)\
+      \ == pb:\n                    continue\n                self.si_seen[n] = pb\n\
+      \                text, _ = decode_bcch(pb)\n                self.msg('SI-message\
+      \ %d %s (%d transmission%s combined)  payload %s\\n%s' % (\n               \
+      \     n + 1, e['sibs'] if e['sibs'] else '[SIB2-NB]', len(parts), 's' if len(parts)\
+      \ > 1 else '',\n                    pb.hex(), text or ''))\n        # forget\
+      \ stale accumulations\n        self.si_acc = {k: x for k, x in self.si_acc.items()\
+      \ if a - k[1] < self.si['win'] + 4}\n\n    # ----------------------------------------------------------------\
+      \ main entry\n    def feed_frame(self, G, seq):\n        \"\"\"G: (140, 12)\
+      \ resource grid of one frame (subframe 0 first); seq: frame counter from Sync\n\
+      \        (epoch * 1e6 + frame index; a new epoch = new frame grid after re-acquisition).\"\
+      \"\"\n        ep = seq // 1000000\n        if ep != getattr(self, 'epoch', ep):\n\
+      \            self.log('[decoder] sync re-acquired: restarting cell search')\n\
+      \            keep = (self.si_seen, self.sib1_text, self.last_mib_bits, self.pci\
+      \ or getattr(self, 'prev_pci', None),\n                    getattr(self, 'sib1_hex',\
+      \ None))\n            self.reset()\n            self.si_seen, self.sib1_text,\
+      \ self.last_mib_bits, self.prev_pci, self.sib1_hex = keep\n            self._announced\
+      \ = True\n        self.epoch = ep\n        self.frames += 1\n        if self.pci\
+      \ is None:\n            self._nsss(G, seq)\n            return\n        self.pci_frames\
+      \ += 1\n        if self.mib is None and self.pci_frames > self.MIB_TIMEOUT:\n\
+      \            i = self.cands.index(self.pci) if self.pci in self.cands else -1\n\
+      \            if i + 1 < len(self.cands):\n                self.log('[npbch]\
+      \ no MIB-NB with PCI %d; trying co-channel PCI %d' % (self.pci, self.cands[i\
+      \ + 1]))\n                self._use_pci(self.cands[i + 1])\n            else:\n\
+      \                self.log('[npbch] no MIB-NB with any candidate; restarting\
+      \ cell search')\n                keep = (self.si_seen, self.sib1_text, self.last_mib_bits,\
+      \ getattr(self, 'sib1_hex', None))\n                self.reset()\n         \
+      \       self.si_seen, self.sib1_text, self.last_mib_bits, self.sib1_hex = keep\n\
+      \                return\n        self._frame_chest(G, seq)\n        self._sinr_frame(G,\
+      \ seq)\n        self._pbch_collect(G, seq)\n        self._pbch(seq)\n      \
+      \  if self.mib is None or self.sfn_off is None:\n            return\n      \
+      \  nf = (seq + self.sfn_off) % 1024\n        if nf == 0 and self.hsfn is not\
+      \ None and self.frames > 1:\n            self.hsfn = (self.hsfn + 1) % 1024\n\
+      \        self._sib1(G, nf)\n        self._si(G, nf)\n"
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 120]
+    rotation: 0
+    state: enabled
+- name: ncorr
+  id: fft_filter_xxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    decim: '1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    nthreads: '1'
+    samp_delay: '0'
+    taps: npss_taps
+    type: ccc
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1000, 684]
+    rotation: 0
+    state: enabled
+- name: nen
+  id: blocks_moving_average_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    length: npss_len
+    max_iter: '4000'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    scale: '1'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1200, 768]
+    rotation: 0
+    state: enabled
+- name: neps
+  id: blocks_add_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: 1e-12
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1400, 784]
+    rotation: 0
+    state: enabled
+- name: nmag
+  id: blocks_complex_to_mag_squared
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1200, 700]
+    rotation: 0
+    state: enabled
+- name: nnorm
+  id: blocks_divide_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1580, 712]
+    rotation: 0
+    state: enabled
+- name: npow
+  id: blocks_complex_to_mag_squared
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1000, 780]
+    rotation: 0
+    state: enabled
+- name: nras
+  id: qtgui_time_raster_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    axislabels: 'True'
+    color1: '2'
+    color10: '0'
+    color2: '0'
+    color3: '0'
+    color4: '0'
+    color5: '0'
+    color6: '0'
+    color7: '0'
+    color8: '0'
+    color9: '0'
+    comment: ''
+    grid: 'False'
+    gui_hint: 1,2,1,2
+    label1: ''
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    mult: '[]'
+    name: '"NPSS correlation, 10 ms per row (vertical line = sync)"'
+    ncols: '2400'
+    nconnections: '1'
+    nrows: '200'
+    offset: '[]'
+    samp_rate: samp_rate / 8
+    type: float
+    update_time: '0.10'
+    x_end_value: '10.0'
+    x_label: '""'
+    x_start_value: '0.0'
+    y_end_value: '2.0'
+    y_label: '""'
+    y_start_value: '0.0'
+    zmax: '0.5'
+    zmin: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1760, 690]
+    rotation: 0
+    state: enabled
+- name: ofdm_fft
+  id: fft_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    fft_size: '128'
+    forward: 'True'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    nthreads: '1'
+    shift: 'True'
+    type: complex
+    window: window.rectangular(128)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1260, 396]
+    rotation: 0
+    state: enabled
+- name: rec
+  id: blocks_file_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    append: 'False'
+    comment: 'RECORDER (disabled): enable for ~20 s to capture the carrier at 240
+      kS/s
+
+      (1.9 MB/s, complex64) and send the file for offline analysis'
+    file: '"nbiot_240k.cf32"'
+    type: complex
+    unbuffered: 'False'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1000, 860]
+    rotation: 0
+    state: disabled
+- name: rtl
+  id: soapy_rtlsdr_source
+  parameters:
+    affinity: ''
+    agc: 'False'
+    alias: ''
+    bias: 'False'
+    bufflen: '16384'
+    center_freq: lo_freq
+    comment: ''
+    dev_args: '""'
+    freq_correction: ppm
+    gain: gain
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samp_rate: samp_rate
+    type: fc32
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [56, 440.0]
+    rotation: 0
+    state: enabled
+- name: s2str
+  id: pdu_pdu_to_tagged_stream
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: SINR PDUs (10 values per frame) -> float stream, so the raster stacks
+      one row per frame
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    tag: packet_len
+    type: float
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2512, 296.0]
+    rotation: 0
+    state: enabled
+- name: s2v
+  id: blocks_stream_to_vector
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: 65536 symbols (~4.7 s) of slack for the decoder
+    maxoutbuf: '0'
+    minoutbuf: '65536'
+    num_items: '12'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1840, 412]
+    rotation: 0
+    state: enabled
+- name: spec
+  id: qtgui_freq_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    autoscale: 'False'
+    average: '0.1'
+    axislabels: 'True'
+    bw: samp_rate
+    color1: '"blue"'
+    color10: '"dark blue"'
+    color2: '"red"'
+    color3: '"green"'
+    color4: '"black"'
+    color5: '"cyan"'
+    color6: '"magenta"'
+    color7: '"yellow"'
+    color8: '"dark red"'
+    color9: '"dark green"'
+    comment: ''
+    ctrlpanel: 'False'
+    fc: f_nb
+    fftsize: '4096'
+    freqhalf: 'True'
+    grid: 'True'
+    gui_hint: 1,0,1,2
+    label: Relative Gain
+    label1: ''
+    label10: ''''''
+    label2: ''''''
+    label3: ''''''
+    label4: ''''''
+    label5: ''''''
+    label6: ''''''
+    label7: ''''''
+    label8: ''''''
+    label9: ''''''
+    legend: 'False'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    name: '"Channel (NB-IoT carrier at centre)"'
+    nconnections: '1'
+    norm_window: 'False'
+    showports: 'False'
+    tr_chan: '0'
+    tr_level: '0.0'
+    tr_mode: qtgui.TRIG_MODE_FREE
+    tr_tag: '""'
+    type: complex
+    units: dB
+    update_time: '0.10'
+    width1: '1'
+    width10: '1'
+    width2: '1'
+    width3: '1'
+    width4: '1'
+    width5: '1'
+    width6: '1'
+    width7: '1'
+    width8: '1'
+    width9: '1'
+    wintype: window.WIN_BLACKMAN_hARRIS
+    ymax: '0'
+    ymin: '-120'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [820, 560]
+    rotation: 0
+    state: enabled
+- name: sras
+  id: qtgui_time_raster_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    axislabels: 'True'
+    color1: '2'
+    color10: '0'
+    color2: '0'
+    color3: '0'
+    color4: '0'
+    color5: '0'
+    color6: '0'
+    color7: '0'
+    color8: '0'
+    color9: '0'
+    comment: ''
+    grid: 'False'
+    gui_hint: 4,0,1,3
+    label1: ''
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    mult: '[]'
+    name: '"Serving-cell SINR per subframe (dB): 10 columns = subframes 0..9, 1 row
+      = 1 frame, 3 s per screen"'
+    ncols: '10'
+    nconnections: '1'
+    nrows: '300'
+    offset: '[]'
+    samp_rate: '1000'
+    type: float
+    update_time: '0.10'
+    x_end_value: '10.0'
+    x_label: '"subframe"'
+    x_start_value: '0.0'
+    y_end_value: '300.0'
+    y_label: '"frames"'
+    y_start_value: '0.0'
+    zmax: '25'
+    zmin: '-5'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2728, 268.0]
+    rotation: 0
+    state: enabled
+- name: sync
+  id: epy_block
+  parameters:
+    _source_code: "\"\"\"\nNB-IoT front end -- Embedded Python Block (GNU Radio 3.10)\n\
+      \nInput : complex @ 1.92 MS/s, NB-IoT anchor carrier centred at 0 Hz\n     \
+      \   (output of the stock Frequency Xlating FFT Filter).\nOutput: complex vectors\
+      \ of 128 = one OFDM symbol with its cyclic prefix removed and the\n        carrier-frequency\
+      \ offset corrected; 140 vectors per 10 ms radio frame. The first\n        vector\
+      \ of every frame carries the tag 'frame' (value = frame counter).\n\nWhy an\
+      \ EPB: NPSS acquisition over a +-7 kHz CFO search, per-frame NPSS tracking of\
+      \ timing\nand frequency (RTL clock drift), and stripping the alternating 10/9-sample\
+      \ cyclic prefix on\na frame grid have no stock equivalents (Keep M in N needs\
+      \ a constant period, and no stock\nblock re-times on a correlation peak). The\
+      \ FFT and sub-carrier selection that follow are\nstock blocks. All maths lives\
+      \ in the Python Module `nbiot` (passed in as `lib`).\n\"\"\"\nimport numpy as\
+      \ np\nimport pmt\nfrom gnuradio import gr\n\n\nclass blk(gr.basic_block):\n\
+      \    def __init__(self, lib=None, verbose=True):\n        gr.basic_block.__init__(self,\
+      \ name='NB-IoT Sync (NPSS, CFO, CP removal)',\n                            \
+      \    in_sig=[np.complex64], out_sig=[(np.complex64, 128)])\n        self.lib\
+      \ = lib\n        self.verbose = verbose\n        self.set_tag_propagation_policy(gr.TPP_DONT)\n\
+      \        self.sync = lib.Sync(log=self._log) if lib is not None else None\n\
+      \        self.pending = []          # [(frame (140, 128), info)]\n        self.pos\
+      \ = 0               # vectors of pending[0] already written\n\n    def _log(self,\
+      \ s):\n        if self.verbose:\n            print(s, flush=True)\n\n    def\
+      \ forecast(self, noutput_items, ninputs):\n        return [1] * ninputs\n\n\
+      \    def general_work(self, input_items, output_items):\n        inp = input_items[0]\n\
+      \        out = output_items[0]\n        if self.sync is None:\n            self.consume(0,\
+      \ len(inp))\n            return 0\n        backlog = sum(len(f) for f, _ in\
+      \ self.pending) - self.pos\n        if backlog < 280:                      \
+      \ # take input only while the backlog is small\n            self.pending +=\
+      \ self.sync.feed(inp.copy())\n            self.consume(0, len(inp))\n      \
+      \      lag = len(self.sync.buf) / 1.92e6\n            if lag > 1.0 and self.nitems_read(0)\
+      \ > getattr(self, '_warn_at', 0):\n                self._warn_at = self.nitems_read(0)\
+      \ + int(10 * 1.92e6)\n                self._log('[sync] WARNING: %.1f s of samples\
+      \ queued - CPU is not keeping up' % lag)\n        n = 0\n        while self.pending\
+      \ and n < len(out):\n            fr, info = self.pending[0]\n            if\
+      \ self.pos == 0:\n                self.add_item_tag(0, self.nitems_written(0)\
+      \ + n, pmt.intern('frame'),\n                                  pmt.from_long(int(info['seq'])))\n\
+      \            k = min(len(fr) - self.pos, len(out) - n)\n            out[n:n\
+      \ + k] = fr[self.pos:self.pos + k]\n            n += k\n            self.pos\
+      \ += k\n            if self.pos == len(fr):\n                self.pending.pop(0)\n\
+      \                self.pos = 0\n        return n\n"
+    affinity: ''
+    alias: ''
+    comment: 'EPB #1: NPSS acquisition (+-7 kHz), timing/CFO tracking,
+
+      CP removal -> 140 x 128 per frame, tag "frame"'
+    lib: nbiot
+    maxoutbuf: '0'
+    minoutbuf: '2048'
+    verbose: 'True'
+  states:
+    _io_cache: ('NB-IoT Sync (NPSS, CFO, CP removal)', 'blk', [('lib', 'None'), ('verbose',
+      'True')], [('0', 'complex', 1)], [('0', 'complex', 128)], '', ['lib', 'verbose'])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [820, 400]
+    rotation: 0
+    state: enabled
+- name: thr
+  id: blocks_throttle2
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    ignoretag: 'True'
+    limit: auto
+    maximum: '0.1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samples_per_second: samp_rate
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [200, 532]
+    rotation: 0
+    state: disabled
+- name: v2s
+  id: blocks_vector_to_stream
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_items: '128'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1460, 412]
+    rotation: 0
+    state: enabled
+
+connections:
+- [agc, '0', k8, '0']
+- [agc, '0', spec, '0']
+- [agc, '0', sync, '0']
+- [chan, '0', agc, '0']
+- [dec, npbch, cbch, in]
+- [dec, npdsch_clean, cclean, in]
+- [dec, npdsch_dirty, cdirty, in]
+- [dec, sinr, s2str, pdus]
+- [dec, text, mdbg, print]
+- [fsrc, '0', thr, '0']
+- [gdb, '0', gras, '0']
+- [gmag, '0', gdb, '0']
+- [halfsc, '0', ofdm_fft, '0']
+- [k8, '0', ncorr, '0']
+- [k8, '0', npow, '0']
+- [k8, '0', rec, '0']
+- [keep12, '0', gmag, '0']
+- [keep12, '0', s2v, '0']
+- [ncorr, '0', nmag, '0']
+- [nen, '0', neps, '0']
+- [neps, '0', nnorm, '1']
+- [nmag, '0', nnorm, '0']
+- [nnorm, '0', nras, '0']
+- [npow, '0', nen, '0']
+- [ofdm_fft, '0', v2s, '0']
+- [rtl, '0', chan, '0']
+- [s2str, '0', sras, '0']
+- [s2v, '0', dec, '0']
+- [sync, '0', halfsc, '0']
+- [thr, '0', chan, '0']
+- [v2s, '0', keep12, '0']
+
+metadata:
+  file_format: 1
+  grc_version: 3.10.10.0

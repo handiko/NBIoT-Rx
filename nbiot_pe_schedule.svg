@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 690" width="1180" height="690" font-family="Helvetica, Arial, 'DejaVu Sans', sans-serif" role="img" aria-label="NB-IoT broadcast schedule: SIB1-NB and SI windows">
+<title>NB-IoT broadcast schedule: SIB1-NB and SI windows</title>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d3d3a"/></marker><marker id="ahc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#A32D2D"/></marker><marker id="aht" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F6E56"/></marker><marker id="ahb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1d4ed8"/></marker><marker id="aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#B45309"/></marker><marker id="ahm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6b6b66"/></marker><marker id="ahp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6D28D9"/></marker><marker id="ahr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#B91C1C"/></marker><marker id="ahg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#15803d"/></marker></defs>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="30.0" y="24.0" font-size="15" fill="#2b2b29" font-weight="700" text-anchor="start" dominant-baseline="central">When does cell 260 say what? The broadcast timetable I had to follow</text>
+<text x="30.0" y="60.0" font-size="12" fill="#2b2b29" font-weight="700" text-anchor="start" dominant-baseline="central">SIB1-NB over one 2.56 s cycle (256 frames): subframe 4 of every even frame, 16 repetitions of 8 subframes</text>
+<rect x="30.0" y="80.0" width="70.0" height="30.0" rx="0" fill="#E6ECFB" stroke="#1d4ed8" stroke-width="0.6"/>
+<text x="65.0" y="95.0" font-size="9" fill="#1d4ed8" font-weight="700" text-anchor="middle" dominant-baseline="central">1</text>
+<rect x="100.0" y="80.0" width="70.0" height="30.0" rx="0" fill="#d3def9" stroke="#1d4ed8" stroke-width="0.6"/>
+<text x="135.0" y="95.0" font-size="9" fill="#1d4ed8" font-weight="700" text-anchor="middle" dominant-baseline="central">2</text>
+<rect x="170.0" y="80.0" width="70.0" height="30.0" rx="0" fill="#E6ECFB" stroke="#1d4ed8" stroke-width="0.6"/>
+<text x="205.0" y="95.0" font-size="9" fill="#1d4ed8" font-weight="700" text-anchor="middle" dominant-baseline="central">3</text>
+<rect x="240.0" y="80.0" width="70.0" height="30.0" rx="0" fill="#d3def9" stroke="#1d4ed8" stroke-width="0.6"/>
+<text x="275.0" y="95.0" font-size="9" fill="#1d4ed8" font-weight="700" text-anchor="middle" dominant-baseline="central">4</text>
+<rect x="310.0" y="80.0" width="70.0" height="30.0" rx="0" fill="#E6ECFB" stroke="#1d4ed8" stroke-width="0.6"/>
+<text x="345.0" y="95.0" font-size="9" fill="#1d4ed8" font-weight="700" text-anchor="middle" dominant-baseline="central">5</text>
+<rect x="380.0" y="80.0" width="70.0" height="30.0" rx="0" fill="#d3def9" stroke="#1d4ed8" stroke-width="0.6"/>
+<text x="415.0" y="95.0" font-size="9" fill="#1d4ed8" font-weight="700" text-anchor="middle" dominant-baseline="central">6</text>
+<rect x="450.0" y="80.0" width="70.0" height="30.0" rx="0" fill="#E6ECFB" stroke="#1d4ed8" stroke-width="0.6"/>
+<text x="485.0" y="95.0" font-size="9" fill="#1d4ed8" font-weight="700" text-anchor="middle" dominant-baseline="central">7</text>
+<rect x="520.0" y="80.0" width="70.0" height="30.0" rx="0" fill="#d3def9" stroke="#1d4ed8" stroke-width="0.6"/>
+<text x="555.0" y="95.0" font-size="9" fill="#1d4ed8" font-weight="700" text-anchor="middle" dominant-baseline="central">8</text>
+<rect x="590.0" y="80.0" width="70.0" height="30.0" rx="0" fill="#E6ECFB" stroke="#1d4ed8" stroke-width="0.6"/>
+<text x="625.0" y="95.0" font-size="9" fill="#1d4ed8" font-weight="700" text-anchor="middle" dominant-baseline="central">9</text>
+<rect x="660.0" y="80.0" width="70.0" height="30.0" rx="0" fill="#d3def9" stroke="#1d4ed8" stroke-width="0.6"/>
+<text x="695.0" y="95.0" font-size="9" fill="#1d4ed8" font-weight="700" text-anchor="middle" dominant-baseline="central">10</text>
+<rect x="730.0" y="80.0" width="70.0" height="30.0" rx="0" fill="#E6ECFB" stroke="#1d4ed8" stroke-width="0.6"/>
+<text x="765.0" y="95.0" font-size="9" fill="#1d4ed8" font-weight="700" text-anchor="middle" dominant-baseline="central">11</text>
+<rect x="800.0" y="80.0" width="70.0" height="30.0" rx="0" fill="#d3def9" stroke="#1d4ed8" stroke-width="0.6"/>
+<text x="835.0" y="95.0" font-size="9" fill="#1d4ed8" font-weight="700" text-anchor="middle" dominant-baseline="central">12</text>
+<rect x="870.0" y="80.0" width="70.0" height="30.0" rx="0" fill="#E6ECFB" stroke="#1d4ed8" stroke-width="0.6"/>
+<text x="905.0" y="95.0" font-size="9" fill="#1d4ed8" font-weight="700" text-anchor="middle" dominant-baseline="central">13</text>
+<rect x="940.0" y="80.0" width="70.0" height="30.0" rx="0" fill="#d3def9" stroke="#1d4ed8" stroke-width="0.6"/>
+<text x="975.0" y="95.0" font-size="9" fill="#1d4ed8" font-weight="700" text-anchor="middle" dominant-baseline="central">14</text>
+<rect x="1010.0" y="80.0" width="70.0" height="30.0" rx="0" fill="#E6ECFB" stroke="#1d4ed8" stroke-width="0.6"/>
+<text x="1045.0" y="95.0" font-size="9" fill="#1d4ed8" font-weight="700" text-anchor="middle" dominant-baseline="central">15</text>
+<rect x="1080.0" y="80.0" width="70.0" height="30.0" rx="0" fill="#d3def9" stroke="#1d4ed8" stroke-width="0.6"/>
+<text x="1115.0" y="95.0" font-size="9" fill="#1d4ed8" font-weight="700" text-anchor="middle" dominant-baseline="central">16</text>
+<text x="30.0" y="122.0" font-size="9" fill="#6b6b66" font-weight="400" text-anchor="start" dominant-baseline="central">SFN 0</text>
+<text x="1150.0" y="122.0" font-size="9" fill="#6b6b66" font-weight="400" text-anchor="end" dominant-baseline="central">SFN 255 (then it all repeats: 256, 512, 768)</text>
+<text x="30.0" y="144.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">Each numbered block is one full copy (frames 0, 2, 4 … 14 → 8 subframes). A meter in a deep basement adds up to 16 copies;</text>
+<text x="30.0" y="158.8" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">I needed one: the CRC passed on the first copy every time, so my log says "1 repetition combined".</text>
+<text x="30.0" y="210.0" font-size="12" fill="#2b2b29" font-weight="700" text-anchor="start" dominant-baseline="central">SI-message 1 (SIB2 + SIB3): one 960 ms window every 512 frames, starting at frame 12</text>
+<rect x="30.0" y="230.0" width="1120.0" height="30.0" rx="0" fill="#fafaf7" stroke="#6b6b66" stroke-width="0.8"/>
+<rect x="56.2" y="230.0" width="210.0" height="30.0" rx="0" fill="#EDE7FB" stroke="#6D28D9" stroke-width="1.0"/>
+<line x1="56.2" y1="232.0" x2="56.2" y2="258.0" stroke="#6D28D9" stroke-width="1.2"/>
+<line x1="65.0" y1="232.0" x2="65.0" y2="258.0" stroke="#6D28D9" stroke-width="1.2"/>
+<line x1="73.8" y1="232.0" x2="73.8" y2="258.0" stroke="#6D28D9" stroke-width="1.2"/>
+<line x1="82.5" y1="232.0" x2="82.5" y2="258.0" stroke="#6D28D9" stroke-width="1.2"/>
+<line x1="91.2" y1="232.0" x2="91.2" y2="258.0" stroke="#6D28D9" stroke-width="1.2"/>
+<line x1="100.0" y1="232.0" x2="100.0" y2="258.0" stroke="#6D28D9" stroke-width="1.2"/>
+<line x1="108.8" y1="232.0" x2="108.8" y2="258.0" stroke="#6D28D9" stroke-width="1.2"/>
+<line x1="117.5" y1="232.0" x2="117.5" y2="258.0" stroke="#6D28D9" stroke-width="1.2"/>
+<line x1="126.2" y1="232.0" x2="126.2" y2="258.0" stroke="#6D28D9" stroke-width="1.2"/>
+<line x1="135.0" y1="232.0" x2="135.0" y2="258.0" stroke="#6D28D9" stroke-width="1.2"/>
+<line x1="143.8" y1="232.0" x2="143.8" y2="258.0" stroke="#6D28D9" stroke-width="1.2"/>
+<line x1="152.5" y1="232.0" x2="152.5" y2="258.0" stroke="#6D28D9" stroke-width="1.2"/>
+<line x1="161.2" y1="232.0" x2="161.2" y2="258.0" stroke="#6D28D9" stroke-width="1.2"/>
+<line x1="170.0" y1="232.0" x2="170.0" y2="258.0" stroke="#6D28D9" stroke-width="1.2"/>
+<line x1="178.8" y1="232.0" x2="178.8" y2="258.0" stroke="#6D28D9" stroke-width="1.2"/>
+<line x1="187.5" y1="232.0" x2="187.5" y2="258.0" stroke="#6D28D9" stroke-width="1.2"/>
+<line x1="196.2" y1="232.0" x2="196.2" y2="258.0" stroke="#6D28D9" stroke-width="1.2"/>
+<line x1="205.0" y1="232.0" x2="205.0" y2="258.0" stroke="#6D28D9" stroke-width="1.2"/>
+<line x1="213.8" y1="232.0" x2="213.8" y2="258.0" stroke="#6D28D9" stroke-width="1.2"/>
+<line x1="222.5" y1="232.0" x2="222.5" y2="258.0" stroke="#6D28D9" stroke-width="1.2"/>
+<line x1="231.2" y1="232.0" x2="231.2" y2="258.0" stroke="#6D28D9" stroke-width="1.2"/>
+<line x1="240.0" y1="232.0" x2="240.0" y2="258.0" stroke="#6D28D9" stroke-width="1.2"/>
+<line x1="248.8" y1="232.0" x2="248.8" y2="258.0" stroke="#6D28D9" stroke-width="1.2"/>
+<line x1="257.5" y1="232.0" x2="257.5" y2="258.0" stroke="#6D28D9" stroke-width="1.2"/>
+<text x="161.2" y="274.0" font-size="10" fill="#6D28D9" font-weight="700" text-anchor="middle" dominant-baseline="central">window: frames 12 … 107</text>
+<text x="686.2" y="245.0" font-size="10" fill="#6b6b66" font-weight="400" text-anchor="middle" dominant-baseline="central">nothing for this SI message until frame 524 (= 512 + 12)</text>
+<text x="30.0" y="274.0" font-size="9" fill="#6b6b66" font-weight="400" text-anchor="start" dominant-baseline="central">0</text>
+<text x="1150.0" y="274.0" font-size="9" fill="#6b6b66" font-weight="400" text-anchor="end" dominant-baseline="central">511</text>
+<text x="30.0" y="296.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">Violet ticks = a new transmission every 4th frame (every4thRF). I decoded the ones starting at SFN 12, 16 and 524.</text>
+<text x="30.0" y="340.0" font-size="12" fill="#2b2b29" font-weight="700" text-anchor="start" dominant-baseline="central">Zoom: one transmission needs 8 free subframes. Starting at SFN 12 they fall here</text>
+<text x="290.0" y="366.0" font-size="11" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">frame 12 (even)</text>
+<rect x="30.0" y="380.0" width="50.0" height="46.0" rx="4" fill="#F1F1EE" stroke="#6b6b66" stroke-width="1.0"/>
+<text x="55.0" y="396.0" font-size="10" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf0</text>
+<text x="55.0" y="413.0" font-size="9.5" fill="#6b6b66" font-weight="400" text-anchor="middle" dominant-baseline="central">NPBCH</text>
+<rect x="82.0" y="380.0" width="50.0" height="46.0" rx="4" fill="#EDE7FB" stroke="#6D28D9" stroke-width="1.0"/>
+<text x="107.0" y="396.0" font-size="10" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf1</text>
+<text x="107.0" y="413.0" font-size="9.5" fill="#6D28D9" font-weight="700" text-anchor="middle" dominant-baseline="central">1</text>
+<rect x="134.0" y="380.0" width="50.0" height="46.0" rx="4" fill="#EDE7FB" stroke="#6D28D9" stroke-width="1.0"/>
+<text x="159.0" y="396.0" font-size="10" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf2</text>
+<text x="159.0" y="413.0" font-size="9.5" fill="#6D28D9" font-weight="700" text-anchor="middle" dominant-baseline="central">2</text>
+<rect x="186.0" y="380.0" width="50.0" height="46.0" rx="4" fill="#EDE7FB" stroke="#6D28D9" stroke-width="1.0"/>
+<text x="211.0" y="396.0" font-size="10" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf3</text>
+<text x="211.0" y="413.0" font-size="9.5" fill="#6D28D9" font-weight="700" text-anchor="middle" dominant-baseline="central">3</text>
+<rect x="238.0" y="380.0" width="50.0" height="46.0" rx="4" fill="#F1F1EE" stroke="#6b6b66" stroke-width="1.0"/>
+<text x="263.0" y="396.0" font-size="10" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf4</text>
+<text x="263.0" y="413.0" font-size="9.5" fill="#6b6b66" font-weight="400" text-anchor="middle" dominant-baseline="central">SIB1</text>
+<rect x="290.0" y="380.0" width="50.0" height="46.0" rx="4" fill="#F1F1EE" stroke="#6b6b66" stroke-width="1.0"/>
+<text x="315.0" y="396.0" font-size="10" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf5</text>
+<text x="315.0" y="413.0" font-size="9.5" fill="#6b6b66" font-weight="400" text-anchor="middle" dominant-baseline="central">NPSS</text>
+<rect x="342.0" y="380.0" width="50.0" height="46.0" rx="4" fill="#EDE7FB" stroke="#6D28D9" stroke-width="1.0"/>
+<text x="367.0" y="396.0" font-size="10" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf6</text>
+<text x="367.0" y="413.0" font-size="9.5" fill="#6D28D9" font-weight="700" text-anchor="middle" dominant-baseline="central">4</text>
+<rect x="394.0" y="380.0" width="50.0" height="46.0" rx="4" fill="#EDE7FB" stroke="#6D28D9" stroke-width="1.0"/>
+<text x="419.0" y="396.0" font-size="10" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf7</text>
+<text x="419.0" y="413.0" font-size="9.5" fill="#6D28D9" font-weight="700" text-anchor="middle" dominant-baseline="central">5</text>
+<rect x="446.0" y="380.0" width="50.0" height="46.0" rx="4" fill="#EDE7FB" stroke="#6D28D9" stroke-width="1.0"/>
+<text x="471.0" y="396.0" font-size="10" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf8</text>
+<text x="471.0" y="413.0" font-size="9.5" fill="#6D28D9" font-weight="700" text-anchor="middle" dominant-baseline="central">6</text>
+<rect x="498.0" y="380.0" width="50.0" height="46.0" rx="4" fill="#F1F1EE" stroke="#6b6b66" stroke-width="1.0"/>
+<text x="523.0" y="396.0" font-size="10" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf9</text>
+<text x="523.0" y="413.0" font-size="9.5" fill="#6b6b66" font-weight="400" text-anchor="middle" dominant-baseline="central">NSSS</text>
+<text x="850.0" y="366.0" font-size="11" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">frame 13 (odd)</text>
+<rect x="590.0" y="380.0" width="50.0" height="46.0" rx="4" fill="#F1F1EE" stroke="#6b6b66" stroke-width="1.0"/>
+<text x="615.0" y="396.0" font-size="10" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf0</text>
+<text x="615.0" y="413.0" font-size="9.5" fill="#6b6b66" font-weight="400" text-anchor="middle" dominant-baseline="central">NPBCH</text>
+<rect x="642.0" y="380.0" width="50.0" height="46.0" rx="4" fill="#EDE7FB" stroke="#6D28D9" stroke-width="1.0"/>
+<text x="667.0" y="396.0" font-size="10" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf1</text>
+<text x="667.0" y="413.0" font-size="9.5" fill="#6D28D9" font-weight="700" text-anchor="middle" dominant-baseline="central">7</text>
+<rect x="694.0" y="380.0" width="50.0" height="46.0" rx="4" fill="#EDE7FB" stroke="#6D28D9" stroke-width="1.0"/>
+<text x="719.0" y="396.0" font-size="10" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf2</text>
+<text x="719.0" y="413.0" font-size="9.5" fill="#6D28D9" font-weight="700" text-anchor="middle" dominant-baseline="central">8</text>
+<rect x="746.0" y="380.0" width="50.0" height="46.0" rx="4" fill="#ffffff" stroke="#cfcfca" stroke-width="1.0"/>
+<text x="771.0" y="396.0" font-size="10" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf3</text>
+<text x="771.0" y="413.0" font-size="9.5" fill="#cfcfca" font-weight="400" text-anchor="middle" dominant-baseline="central">free</text>
+<rect x="798.0" y="380.0" width="50.0" height="46.0" rx="4" fill="#ffffff" stroke="#cfcfca" stroke-width="1.0"/>
+<text x="823.0" y="396.0" font-size="10" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf4</text>
+<text x="823.0" y="413.0" font-size="9.5" fill="#cfcfca" font-weight="400" text-anchor="middle" dominant-baseline="central">free</text>
+<rect x="850.0" y="380.0" width="50.0" height="46.0" rx="4" fill="#F1F1EE" stroke="#6b6b66" stroke-width="1.0"/>
+<text x="875.0" y="396.0" font-size="10" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf5</text>
+<text x="875.0" y="413.0" font-size="9.5" fill="#6b6b66" font-weight="400" text-anchor="middle" dominant-baseline="central">NPSS</text>
+<rect x="902.0" y="380.0" width="50.0" height="46.0" rx="4" fill="#ffffff" stroke="#cfcfca" stroke-width="1.0"/>
+<text x="927.0" y="396.0" font-size="10" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf6</text>
+<text x="927.0" y="413.0" font-size="9.5" fill="#cfcfca" font-weight="400" text-anchor="middle" dominant-baseline="central">free</text>
+<rect x="954.0" y="380.0" width="50.0" height="46.0" rx="4" fill="#ffffff" stroke="#cfcfca" stroke-width="1.0"/>
+<text x="979.0" y="396.0" font-size="10" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf7</text>
+<text x="979.0" y="413.0" font-size="9.5" fill="#cfcfca" font-weight="400" text-anchor="middle" dominant-baseline="central">free</text>
+<rect x="1006.0" y="380.0" width="50.0" height="46.0" rx="4" fill="#ffffff" stroke="#cfcfca" stroke-width="1.0"/>
+<text x="1031.0" y="396.0" font-size="10" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf8</text>
+<text x="1031.0" y="413.0" font-size="9.5" fill="#cfcfca" font-weight="400" text-anchor="middle" dominant-baseline="central">free</text>
+<rect x="1058.0" y="380.0" width="50.0" height="46.0" rx="4" fill="#ffffff" stroke="#cfcfca" stroke-width="1.0"/>
+<text x="1083.0" y="396.0" font-size="10" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf9</text>
+<text x="1083.0" y="413.0" font-size="9.5" fill="#cfcfca" font-weight="400" text-anchor="middle" dominant-baseline="central">free</text>
+<rect x="30.0" y="444.0" width="22.0" height="16.0" rx="4" fill="#EDE7FB" stroke="#6D28D9" stroke-width="1.2"/>
+<text x="58.0" y="452.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">SI-message 1, subframe number 1…8 of the codeword</text>
+<rect x="420.0" y="444.0" width="22.0" height="16.0" rx="4" fill="#F1F1EE" stroke="#6b6b66" stroke-width="1.2"/>
+<text x="448.0" y="452.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">taken: NPBCH, NPSS, SIB1 (even frames), NSSS (even frames)</text>
+<text x="30.0" y="490.0" font-size="11.5" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">The tower never says "the SI message starts now". The rules are in 3GPP TS 36.331 and 36.213, and the numbers come from SIB1:</text>
+<text x="30.0" y="505.5" font-size="11.5" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">si-Periodicity rf512, si-RadioFrameOffset 12, si-WindowLength ms960, si-RepetitionPattern every4thRF, si-TB b328 (→ 8 subframes).</text>
+<text x="30.0" y="521.0" font-size="11.5" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">My decoder recomputes this table for every frame, collects exactly those 8 subframes, and only then tries to decode.</text>
+<text x="30.0" y="536.6" font-size="11.5" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">One missed or extra subframe and the CRC fails. Every SI decode in my log passed on the first transmission.</text>
+<text x="30.0" y="552.1" font-size="11.5" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">This is also why the decoder needs H-SFN: the SI timetable is counted in absolute frames (H-SFN × 1024 + SFN).</text>
+</svg>

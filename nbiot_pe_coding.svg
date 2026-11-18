@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 700" width="1180" height="700" font-family="Helvetica, Arial, 'DejaVu Sans', sans-serif" role="img" aria-label="NB-IoT channel coding chains for MIB-NB and SIB1-NB">
+<title>NB-IoT channel coding chains for MIB-NB and SIB1-NB</title>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d3d3a"/></marker><marker id="ahc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#A32D2D"/></marker><marker id="aht" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F6E56"/></marker><marker id="ahb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1d4ed8"/></marker><marker id="aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#B45309"/></marker><marker id="ahm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6b6b66"/></marker><marker id="ahp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6D28D9"/></marker><marker id="ahr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#B91C1C"/></marker><marker id="ahg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#15803d"/></marker></defs>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="30.0" y="24.0" font-size="15" fill="#2b2b29" font-weight="700" text-anchor="start" dominant-baseline="central">How 34 bits become 1600, and how I turn 1600 noisy guesses back into 34 bits</text>
+<text x="30.0" y="60.0" font-size="12" fill="#2b2b29" font-weight="700" text-anchor="start" dominant-baseline="central">Tower side, MIB-NB (the frame number and the pointer to SIB1), 640 ms per codeword</text>
+<rect x="30.0" y="78.0" width="150.0" height="78.0" rx="8" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1.3"/>
+<text x="105.0" y="101.5" font-size="12" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">MIB-NB</text>
+<text x="105.0" y="118.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">34 bits</text>
+<text x="105.0" y="133.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">SFN, schedule, tag…</text>
+<path d="M180.0 117.0 L194.0 117.0" fill="none" stroke="#0F6E56" stroke-width="1.4" marker-end="url(#aht)"/>
+<rect x="194.0" y="78.0" width="150.0" height="78.0" rx="8" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1.3"/>
+<text x="269.0" y="101.5" font-size="12" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">+ CRC-16</text>
+<text x="269.0" y="118.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">50 bits</text>
+<text x="269.0" y="133.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">mask = antenna ports</text>
+<path d="M344.0 117.0 L358.0 117.0" fill="none" stroke="#0F6E56" stroke-width="1.4" marker-end="url(#aht)"/>
+<rect x="358.0" y="78.0" width="150.0" height="78.0" rx="8" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1.3"/>
+<text x="433.0" y="101.5" font-size="12" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">TBCC ⅓</text>
+<text x="433.0" y="118.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">150 bits</text>
+<text x="433.0" y="133.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">tail-biting, K = 7</text>
+<path d="M508.0 117.0 L522.0 117.0" fill="none" stroke="#0F6E56" stroke-width="1.4" marker-end="url(#aht)"/>
+<rect x="522.0" y="78.0" width="150.0" height="78.0" rx="8" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1.3"/>
+<text x="597.0" y="101.5" font-size="12" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">rate match</text>
+<text x="597.0" y="118.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">1600 bits</text>
+<text x="597.0" y="133.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">each bit ×10.7</text>
+<path d="M672.0 117.0 L686.0 117.0" fill="none" stroke="#0F6E56" stroke-width="1.4" marker-end="url(#aht)"/>
+<rect x="686.0" y="78.0" width="150.0" height="78.0" rx="8" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1.3"/>
+<text x="761.0" y="101.5" font-size="12" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">scramble</text>
+<text x="761.0" y="118.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">1600 bits</text>
+<text x="761.0" y="133.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">Gold seq, seed = PCI</text>
+<path d="M836.0 117.0 L850.0 117.0" fill="none" stroke="#0F6E56" stroke-width="1.4" marker-end="url(#aht)"/>
+<rect x="850.0" y="78.0" width="150.0" height="78.0" rx="8" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1.3"/>
+<text x="925.0" y="101.5" font-size="12" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">QPSK → 8 blocks</text>
+<text x="925.0" y="118.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">8 × 100 symbols</text>
+<text x="925.0" y="133.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">block b in frames 8b…8b+7</text>
+<path d="M1000.0 117.0 L1014.0 117.0" fill="none" stroke="#0F6E56" stroke-width="1.4" marker-end="url(#aht)"/>
+<rect x="1014.0" y="78.0" width="150.0" height="78.0" rx="8" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1.3"/>
+<text x="1089.0" y="101.5" font-size="12" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">Rel-14 rotation</text>
+<text x="1089.0" y="118.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">× ±1, ±j per RE</text>
+<text x="1089.0" y="133.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">changes every frame</text>
+<text x="30.0" y="220.0" font-size="12" fill="#2b2b29" font-weight="700" text-anchor="start" dominant-baseline="central">Tower side, SIB1-NB (who the network is), 2.56 s per repetition cycle</text>
+<rect x="30.0" y="238.0" width="150.0" height="78.0" rx="8" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1.3"/>
+<text x="105.0" y="261.5" font-size="12" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">SIB1-NB</text>
+<text x="105.0" y="278.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">208 bits</text>
+<text x="105.0" y="293.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">ASN.1 UPER</text>
+<path d="M180.0 277.0 L194.0 277.0" fill="none" stroke="#0F6E56" stroke-width="1.4" marker-end="url(#aht)"/>
+<rect x="194.0" y="238.0" width="150.0" height="78.0" rx="8" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1.3"/>
+<text x="269.0" y="261.5" font-size="12" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">+ CRC-24A</text>
+<text x="269.0" y="278.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">232 bits</text>
+<text x="269.0" y="293.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central"></text>
+<path d="M344.0 277.0 L358.0 277.0" fill="none" stroke="#0F6E56" stroke-width="1.4" marker-end="url(#aht)"/>
+<rect x="358.0" y="238.0" width="150.0" height="78.0" rx="8" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1.3"/>
+<text x="433.0" y="261.5" font-size="12" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">TBCC ⅓</text>
+<text x="433.0" y="278.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">696 bits</text>
+<text x="433.0" y="293.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">same code as MIB</text>
+<path d="M508.0 277.0 L522.0 277.0" fill="none" stroke="#0F6E56" stroke-width="1.4" marker-end="url(#aht)"/>
+<rect x="522.0" y="238.0" width="150.0" height="78.0" rx="8" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1.3"/>
+<text x="597.0" y="261.5" font-size="12" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">rate match</text>
+<text x="597.0" y="278.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">2560 bits</text>
+<text x="597.0" y="293.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">8 subframes × 160 × 2</text>
+<path d="M672.0 277.0 L686.0 277.0" fill="none" stroke="#0F6E56" stroke-width="1.4" marker-end="url(#aht)"/>
+<rect x="686.0" y="238.0" width="150.0" height="78.0" rx="8" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1.3"/>
+<text x="761.0" y="261.5" font-size="12" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">scramble</text>
+<text x="761.0" y="278.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">2560 bits</text>
+<text x="761.0" y="293.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">seed: SI-RNTI, PCI, SFN</text>
+<path d="M836.0 277.0 L850.0 277.0" fill="none" stroke="#0F6E56" stroke-width="1.4" marker-end="url(#aht)"/>
+<rect x="850.0" y="238.0" width="150.0" height="78.0" rx="8" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1.3"/>
+<text x="925.0" y="261.5" font-size="12" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">QPSK</text>
+<text x="925.0" y="278.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">1280 symbols</text>
+<text x="925.0" y="293.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">sf4, 8 even frames</text>
+<path d="M1000.0 277.0 L1014.0 277.0" fill="none" stroke="#0F6E56" stroke-width="1.4" marker-end="url(#aht)"/>
+<rect x="1014.0" y="238.0" width="150.0" height="78.0" rx="8" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1.3"/>
+<text x="1089.0" y="261.5" font-size="12" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">repeat ×16</text>
+<text x="1089.0" y="278.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">every 16 frames</text>
+<text x="1089.0" y="293.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">= 256 frames</text>
+<text x="30.0" y="400.0" font-size="12" fill="#2b2b29" font-weight="700" text-anchor="start" dominant-baseline="central">My decoder (Embedded Python Block 2), the same steps backwards, with soft numbers instead of bits</text>
+<rect x="30.0" y="418.0" width="150.0" height="78.0" rx="8" fill="#F8E6E4" stroke="#A32D2D" stroke-width="1.3"/>
+<text x="105.0" y="441.5" font-size="12" fill="#A32D2D" font-weight="700" text-anchor="middle" dominant-baseline="central">equalise</text>
+<text x="105.0" y="458.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">y / H per RE</text>
+<text x="105.0" y="473.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">from the NRS</text>
+<path d="M180.0 457.0 L194.0 457.0" fill="none" stroke="#A32D2D" stroke-width="1.4" marker-end="url(#ahc)"/>
+<rect x="194.0" y="418.0" width="150.0" height="78.0" rx="8" fill="#F8E6E4" stroke="#A32D2D" stroke-width="1.3"/>
+<text x="269.0" y="441.5" font-size="12" fill="#A32D2D" font-weight="700" text-anchor="middle" dominant-baseline="central">undo rotation</text>
+<text x="269.0" y="458.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">× conj(θ)</text>
+<text x="269.0" y="473.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">per-frame (Rel-14)</text>
+<path d="M344.0 457.0 L358.0 457.0" fill="none" stroke="#A32D2D" stroke-width="1.4" marker-end="url(#ahc)"/>
+<rect x="358.0" y="418.0" width="150.0" height="78.0" rx="8" fill="#F8E6E4" stroke="#A32D2D" stroke-width="1.3"/>
+<text x="433.0" y="441.5" font-size="12" fill="#A32D2D" font-weight="700" text-anchor="middle" dominant-baseline="central">soft bits</text>
+<text x="433.0" y="458.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">2 LLRs per RE</text>
+<text x="433.0" y="473.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">+ = "0", − = "1"</text>
+<path d="M508.0 457.0 L522.0 457.0" fill="none" stroke="#A32D2D" stroke-width="1.4" marker-end="url(#ahc)"/>
+<rect x="522.0" y="418.0" width="150.0" height="78.0" rx="8" fill="#F8E6E4" stroke="#A32D2D" stroke-width="1.3"/>
+<text x="597.0" y="441.5" font-size="12" fill="#A32D2D" font-weight="700" text-anchor="middle" dominant-baseline="central">descramble</text>
+<text x="597.0" y="458.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">flip signs</text>
+<text x="597.0" y="473.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">same Gold sequence</text>
+<path d="M672.0 457.0 L686.0 457.0" fill="none" stroke="#A32D2D" stroke-width="1.4" marker-end="url(#ahc)"/>
+<rect x="686.0" y="418.0" width="150.0" height="78.0" rx="8" fill="#F8E6E4" stroke="#A32D2D" stroke-width="1.3"/>
+<text x="761.0" y="441.5" font-size="12" fill="#A32D2D" font-weight="700" text-anchor="middle" dominant-baseline="central">add copies</text>
+<text x="761.0" y="458.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">all frames, all reps</text>
+<text x="761.0" y="473.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">noise averages out</text>
+<path d="M836.0 457.0 L850.0 457.0" fill="none" stroke="#A32D2D" stroke-width="1.4" marker-end="url(#ahc)"/>
+<rect x="850.0" y="418.0" width="150.0" height="78.0" rx="8" fill="#F8E6E4" stroke="#A32D2D" stroke-width="1.3"/>
+<text x="925.0" y="441.5" font-size="12" fill="#A32D2D" font-weight="700" text-anchor="middle" dominant-baseline="central">Viterbi</text>
+<text x="925.0" y="458.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">64-state, tail-biting</text>
+<text x="925.0" y="473.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">best path</text>
+<path d="M1000.0 457.0 L1014.0 457.0" fill="none" stroke="#A32D2D" stroke-width="1.4" marker-end="url(#ahc)"/>
+<rect x="1014.0" y="418.0" width="150.0" height="78.0" rx="8" fill="#F8E6E4" stroke="#A32D2D" stroke-width="1.3"/>
+<text x="1089.0" y="441.5" font-size="12" fill="#A32D2D" font-weight="700" text-anchor="middle" dominant-baseline="central">CRC check</text>
+<text x="1089.0" y="458.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">pass = done</text>
+<text x="1089.0" y="473.5" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">fail = keep adding</text>
+<text x="30.0" y="540.0" font-size="11.5" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">Why so much redundancy? A smart meter in a basement may hear the tower 20 dB weaker than my antenna does.</text>
+<text x="30.0" y="555.5" font-size="11.5" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">Rate ⅓ coding plus repetition lets it decode the MIB-NB below 0 dB SNR, simply by listening longer.</text>
+<text x="30.0" y="571.0" font-size="11.5" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">I am at ≈ 14 dB, so for me one 80 ms block is usually enough; my decoder still combines what it has (15 frames on the first MIB).</text>
+<text x="30.0" y="586.6" font-size="11.5" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">The scrambling is not secrecy: it whitens the data and lets a phone tell neighbouring cells apart (seeded with PCI 260).</text>
+<text x="30.0" y="602.1" font-size="11.5" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">The CRC is the judge. Nothing is printed unless the 16 or 24 check bits agree, so every value in my log is bit-exact.</text>
+</svg>

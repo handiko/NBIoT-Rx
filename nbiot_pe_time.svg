@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 560" width="1180" height="560" font-family="Helvetica, Arial, 'DejaVu Sans', sans-serif" role="img" aria-label="NB-IoT time structure">
+<title>NB-IoT time structure</title>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d3d3a"/></marker><marker id="ahc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#A32D2D"/></marker><marker id="aht" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F6E56"/></marker><marker id="ahb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1d4ed8"/></marker><marker id="aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#B45309"/></marker><marker id="ahm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6b6b66"/></marker><marker id="ahp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6D28D9"/></marker><marker id="ahr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#B91C1C"/></marker><marker id="ahg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#15803d"/></marker></defs>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="30.0" y="24.0" font-size="15" fill="#2b2b29" font-weight="700" text-anchor="start" dominant-baseline="central">Time: from a 2.9-hour hyperframe cycle down to one 66.7 µs symbol</text>
+<text x="30.0" y="88.0" font-size="12" fill="#6D28D9" font-weight="700" text-anchor="start" dominant-baseline="central">Hyperframe cycle</text>
+<text x="30.0" y="104.0" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">1024 × 10.24 s ≈ 2 h 55 min</text>
+<rect x="300.0" y="70.0" width="43.8" height="40.0" rx="0" fill="#6D28D9" stroke="#6D28D9" stroke-width="1" fill-opacity="0.25"/>
+<rect x="343.8" y="70.0" width="43.8" height="40.0" rx="0" fill="#EDE7FB" stroke="#6D28D9" stroke-width="1"/>
+<rect x="387.5" y="70.0" width="43.8" height="40.0" rx="0" fill="#EDE7FB" stroke="#6D28D9" stroke-width="1"/>
+<rect x="431.2" y="70.0" width="43.8" height="40.0" rx="0" fill="#EDE7FB" stroke="#6D28D9" stroke-width="1"/>
+<rect x="475.0" y="70.0" width="43.8" height="40.0" rx="0" fill="#EDE7FB" stroke="#6D28D9" stroke-width="1"/>
+<rect x="518.8" y="70.0" width="43.8" height="40.0" rx="0" fill="#EDE7FB" stroke="#6D28D9" stroke-width="1"/>
+<rect x="562.5" y="70.0" width="43.8" height="40.0" rx="0" fill="#EDE7FB" stroke="#6D28D9" stroke-width="1"/>
+<rect x="606.2" y="70.0" width="43.8" height="40.0" rx="0" fill="#EDE7FB" stroke="#6D28D9" stroke-width="1"/>
+<rect x="650.0" y="70.0" width="43.8" height="40.0" rx="0" fill="#EDE7FB" stroke="#6D28D9" stroke-width="1"/>
+<rect x="693.8" y="70.0" width="43.8" height="40.0" rx="0" fill="#EDE7FB" stroke="#6D28D9" stroke-width="1"/>
+<rect x="737.5" y="70.0" width="43.8" height="40.0" rx="0" fill="#EDE7FB" stroke="#6D28D9" stroke-width="1"/>
+<rect x="781.2" y="70.0" width="43.8" height="40.0" rx="0" fill="#EDE7FB" stroke="#6D28D9" stroke-width="1"/>
+<rect x="825.0" y="70.0" width="43.8" height="40.0" rx="0" fill="#EDE7FB" stroke="#6D28D9" stroke-width="1"/>
+<rect x="868.8" y="70.0" width="43.8" height="40.0" rx="0" fill="#EDE7FB" stroke="#6D28D9" stroke-width="1"/>
+<rect x="912.5" y="70.0" width="43.8" height="40.0" rx="0" fill="#EDE7FB" stroke="#6D28D9" stroke-width="1"/>
+<rect x="956.2" y="70.0" width="43.8" height="40.0" rx="0" fill="#EDE7FB" stroke="#6D28D9" stroke-width="1"/>
+<text x="321.9" y="90.0" font-size="10" fill="#6D28D9" font-weight="600" text-anchor="middle" dominant-baseline="central">0</text>
+<text x="650.0" y="90.0" font-size="10.5" fill="#6D28D9" font-weight="600" text-anchor="middle" dominant-baseline="central">…  H-SFN 0 … 1023  …</text>
+<text x="1014.0" y="90.0" font-size="10.5" fill="#6b6b66" font-weight="400" text-anchor="start" dominant-baseline="central">in my run: H-SFN 327 → 336</text>
+<text x="30.0" y="168.0" font-size="12" fill="#1d4ed8" font-weight="700" text-anchor="start" dominant-baseline="central">One hyperframe</text>
+<text x="30.0" y="184.0" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">1024 frames = 10.24 s</text>
+<rect x="300.0" y="150.0" width="43.8" height="40.0" rx="0" fill="#1d4ed8" stroke="#1d4ed8" stroke-width="1" fill-opacity="0.25"/>
+<rect x="343.8" y="150.0" width="43.8" height="40.0" rx="0" fill="#E6ECFB" stroke="#1d4ed8" stroke-width="1"/>
+<rect x="387.5" y="150.0" width="43.8" height="40.0" rx="0" fill="#E6ECFB" stroke="#1d4ed8" stroke-width="1"/>
+<rect x="431.2" y="150.0" width="43.8" height="40.0" rx="0" fill="#E6ECFB" stroke="#1d4ed8" stroke-width="1"/>
+<rect x="475.0" y="150.0" width="43.8" height="40.0" rx="0" fill="#E6ECFB" stroke="#1d4ed8" stroke-width="1"/>
+<rect x="518.8" y="150.0" width="43.8" height="40.0" rx="0" fill="#E6ECFB" stroke="#1d4ed8" stroke-width="1"/>
+<rect x="562.5" y="150.0" width="43.8" height="40.0" rx="0" fill="#E6ECFB" stroke="#1d4ed8" stroke-width="1"/>
+<rect x="606.2" y="150.0" width="43.8" height="40.0" rx="0" fill="#E6ECFB" stroke="#1d4ed8" stroke-width="1"/>
+<rect x="650.0" y="150.0" width="43.8" height="40.0" rx="0" fill="#E6ECFB" stroke="#1d4ed8" stroke-width="1"/>
+<rect x="693.8" y="150.0" width="43.8" height="40.0" rx="0" fill="#E6ECFB" stroke="#1d4ed8" stroke-width="1"/>
+<rect x="737.5" y="150.0" width="43.8" height="40.0" rx="0" fill="#E6ECFB" stroke="#1d4ed8" stroke-width="1"/>
+<rect x="781.2" y="150.0" width="43.8" height="40.0" rx="0" fill="#E6ECFB" stroke="#1d4ed8" stroke-width="1"/>
+<rect x="825.0" y="150.0" width="43.8" height="40.0" rx="0" fill="#E6ECFB" stroke="#1d4ed8" stroke-width="1"/>
+<rect x="868.8" y="150.0" width="43.8" height="40.0" rx="0" fill="#E6ECFB" stroke="#1d4ed8" stroke-width="1"/>
+<rect x="912.5" y="150.0" width="43.8" height="40.0" rx="0" fill="#E6ECFB" stroke="#1d4ed8" stroke-width="1"/>
+<rect x="956.2" y="150.0" width="43.8" height="40.0" rx="0" fill="#E6ECFB" stroke="#1d4ed8" stroke-width="1"/>
+<text x="321.9" y="170.0" font-size="10" fill="#1d4ed8" font-weight="600" text-anchor="middle" dominant-baseline="central">0</text>
+<text x="650.0" y="170.0" font-size="10.5" fill="#1d4ed8" font-weight="600" text-anchor="middle" dominant-baseline="central">…  SFN 0 … 1023  …</text>
+<text x="1014.0" y="170.0" font-size="10.5" fill="#6b6b66" font-weight="400" text-anchor="start" dominant-baseline="central">MIB first read at SFN 782</text>
+<line x1="300.0" y1="110.0" x2="300.0" y2="150.0" stroke="#6b6b66" stroke-width="0.8" stroke-dasharray="3 3"/>
+<line x1="343.8" y1="110.0" x2="1000.0" y2="150.0" stroke="#6b6b66" stroke-width="0.8" stroke-dasharray="3 3"/>
+<text x="30.0" y="248.0" font-size="12" fill="#0F6E56" font-weight="700" text-anchor="start" dominant-baseline="central">One frame</text>
+<text x="30.0" y="264.0" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">10 ms</text>
+<rect x="300.0" y="230.0" width="70.0" height="40.0" rx="0" fill="#0F6E56" stroke="#0F6E56" stroke-width="1" fill-opacity="0.25"/>
+<text x="335.0" y="250.0" font-size="10" fill="#0F6E56" font-weight="600" text-anchor="middle" dominant-baseline="central">0</text>
+<rect x="370.0" y="230.0" width="70.0" height="40.0" rx="0" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1"/>
+<text x="405.0" y="250.0" font-size="10" fill="#0F6E56" font-weight="600" text-anchor="middle" dominant-baseline="central">1</text>
+<rect x="440.0" y="230.0" width="70.0" height="40.0" rx="0" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1"/>
+<text x="475.0" y="250.0" font-size="10" fill="#0F6E56" font-weight="600" text-anchor="middle" dominant-baseline="central">2</text>
+<rect x="510.0" y="230.0" width="70.0" height="40.0" rx="0" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1"/>
+<text x="545.0" y="250.0" font-size="10" fill="#0F6E56" font-weight="600" text-anchor="middle" dominant-baseline="central">3</text>
+<rect x="580.0" y="230.0" width="70.0" height="40.0" rx="0" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1"/>
+<text x="615.0" y="250.0" font-size="10" fill="#0F6E56" font-weight="600" text-anchor="middle" dominant-baseline="central">4</text>
+<rect x="650.0" y="230.0" width="70.0" height="40.0" rx="0" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1"/>
+<text x="685.0" y="250.0" font-size="10" fill="#0F6E56" font-weight="600" text-anchor="middle" dominant-baseline="central">5</text>
+<rect x="720.0" y="230.0" width="70.0" height="40.0" rx="0" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1"/>
+<text x="755.0" y="250.0" font-size="10" fill="#0F6E56" font-weight="600" text-anchor="middle" dominant-baseline="central">6</text>
+<rect x="790.0" y="230.0" width="70.0" height="40.0" rx="0" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1"/>
+<text x="825.0" y="250.0" font-size="10" fill="#0F6E56" font-weight="600" text-anchor="middle" dominant-baseline="central">7</text>
+<rect x="860.0" y="230.0" width="70.0" height="40.0" rx="0" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1"/>
+<text x="895.0" y="250.0" font-size="10" fill="#0F6E56" font-weight="600" text-anchor="middle" dominant-baseline="central">8</text>
+<rect x="930.0" y="230.0" width="70.0" height="40.0" rx="0" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1"/>
+<text x="965.0" y="250.0" font-size="10" fill="#0F6E56" font-weight="600" text-anchor="middle" dominant-baseline="central">9</text>
+<text x="1014.0" y="250.0" font-size="10.5" fill="#6b6b66" font-weight="400" text-anchor="start" dominant-baseline="central">NPSS sf5, NSSS sf9</text>
+<line x1="300.0" y1="190.0" x2="300.0" y2="230.0" stroke="#6b6b66" stroke-width="0.8" stroke-dasharray="3 3"/>
+<line x1="343.8" y1="190.0" x2="1000.0" y2="230.0" stroke="#6b6b66" stroke-width="0.8" stroke-dasharray="3 3"/>
+<text x="30.0" y="328.0" font-size="12" fill="#B45309" font-weight="700" text-anchor="start" dominant-baseline="central">One subframe</text>
+<text x="30.0" y="344.0" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">1 ms = 1920 samples</text>
+<rect x="300.0" y="310.0" width="350.0" height="40.0" rx="0" fill="#B45309" stroke="#B45309" stroke-width="1" fill-opacity="0.25"/>
+<text x="475.0" y="330.0" font-size="10" fill="#B45309" font-weight="600" text-anchor="middle" dominant-baseline="central">0</text>
+<rect x="650.0" y="310.0" width="350.0" height="40.0" rx="0" fill="#FDF0DC" stroke="#B45309" stroke-width="1"/>
+<text x="825.0" y="330.0" font-size="10" fill="#B45309" font-weight="600" text-anchor="middle" dominant-baseline="central">1</text>
+<text x="1014.0" y="330.0" font-size="10.5" fill="#6b6b66" font-weight="400" text-anchor="start" dominant-baseline="central">two slots = 1 ms</text>
+<line x1="300.0" y1="270.0" x2="300.0" y2="310.0" stroke="#6b6b66" stroke-width="0.8" stroke-dasharray="3 3"/>
+<line x1="370.0" y1="270.0" x2="1000.0" y2="310.0" stroke="#6b6b66" stroke-width="0.8" stroke-dasharray="3 3"/>
+<text x="30.0" y="408.0" font-size="12" fill="#A32D2D" font-weight="700" text-anchor="start" dominant-baseline="central">One slot</text>
+<text x="30.0" y="424.0" font-size="10.5" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">0.5 ms = 960 samples</text>
+<rect x="300.0" y="390.0" width="100.0" height="40.0" rx="0" fill="#A32D2D" stroke="#A32D2D" stroke-width="1" fill-opacity="0.25"/>
+<text x="350.0" y="410.0" font-size="10" fill="#A32D2D" font-weight="600" text-anchor="middle" dominant-baseline="central">0</text>
+<rect x="400.0" y="390.0" width="100.0" height="40.0" rx="0" fill="#F8E6E4" stroke="#A32D2D" stroke-width="1"/>
+<text x="450.0" y="410.0" font-size="10" fill="#A32D2D" font-weight="600" text-anchor="middle" dominant-baseline="central">1</text>
+<rect x="500.0" y="390.0" width="100.0" height="40.0" rx="0" fill="#F8E6E4" stroke="#A32D2D" stroke-width="1"/>
+<text x="550.0" y="410.0" font-size="10" fill="#A32D2D" font-weight="600" text-anchor="middle" dominant-baseline="central">2</text>
+<rect x="600.0" y="390.0" width="100.0" height="40.0" rx="0" fill="#F8E6E4" stroke="#A32D2D" stroke-width="1"/>
+<text x="650.0" y="410.0" font-size="10" fill="#A32D2D" font-weight="600" text-anchor="middle" dominant-baseline="central">3</text>
+<rect x="700.0" y="390.0" width="100.0" height="40.0" rx="0" fill="#F8E6E4" stroke="#A32D2D" stroke-width="1"/>
+<text x="750.0" y="410.0" font-size="10" fill="#A32D2D" font-weight="600" text-anchor="middle" dominant-baseline="central">4</text>
+<rect x="800.0" y="390.0" width="100.0" height="40.0" rx="0" fill="#F8E6E4" stroke="#A32D2D" stroke-width="1"/>
+<text x="850.0" y="410.0" font-size="10" fill="#A32D2D" font-weight="600" text-anchor="middle" dominant-baseline="central">5</text>
+<rect x="900.0" y="390.0" width="100.0" height="40.0" rx="0" fill="#F8E6E4" stroke="#A32D2D" stroke-width="1"/>
+<text x="950.0" y="410.0" font-size="10" fill="#A32D2D" font-weight="600" text-anchor="middle" dominant-baseline="central">6</text>
+<text x="1014.0" y="410.0" font-size="10.5" fill="#6b6b66" font-weight="400" text-anchor="start" dominant-baseline="central">CP 10, 9, 9, 9, 9, 9, 9</text>
+<line x1="300.0" y1="350.0" x2="300.0" y2="390.0" stroke="#6b6b66" stroke-width="0.8" stroke-dasharray="3 3"/>
+<line x1="650.0" y1="350.0" x2="1000.0" y2="390.0" stroke="#6b6b66" stroke-width="0.8" stroke-dasharray="3 3"/>
+<text x="30.0" y="480.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">The frame number SFN (0–1023) is what the MIB-NB carries (its top 4 bits; the rest comes from where in the 640 ms broadcast cycle it is read).</text>
+<text x="30.0" y="494.9" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">The hyperframe number H-SFN is split: 2 low bits in the MIB-NB, 8 high bits in SIB1-NB ("hyperSFN-MSB"). Together they count to 1024.</text>
+<text x="30.0" y="509.7" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">Devices that sleep for hours (eDRX, power-saving mode) need H-SFN to wake up on the right frame. A smart meter can sleep for most of 2.9 hours.</text>
+</svg>

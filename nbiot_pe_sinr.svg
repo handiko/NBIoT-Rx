@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 640" width="1180" height="640" font-family="Helvetica, Arial, 'DejaVu Sans', sans-serif" role="img" aria-label="Per-subframe SINR of cell 260 and frequency reuse 1">
+<title>Per-subframe SINR of cell 260 and frequency reuse 1</title>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d3d3a"/></marker><marker id="ahc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#A32D2D"/></marker><marker id="aht" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F6E56"/></marker><marker id="ahb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1d4ed8"/></marker><marker id="aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#B45309"/></marker><marker id="ahm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6b6b66"/></marker><marker id="ahp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6D28D9"/></marker><marker id="ahr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#B91C1C"/></marker><marker id="ahg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#15803d"/></marker></defs>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="30.0" y="24.0" font-size="15" fill="#2b2b29" font-weight="700" text-anchor="start" dominant-baseline="central">Hearing the neighbours: SINR of cell 260 in each subframe, 90 s of data</text>
+<line x1="90.0" y1="430.0" x2="710.0" y2="430.0" stroke="#ececE8" stroke-width="0.7"/>
+<text x="82.0" y="430.0" font-size="10" fill="#6b6b66" font-weight="400" text-anchor="end" dominant-baseline="central">12 dB</text>
+<line x1="90.0" y1="374.6" x2="710.0" y2="374.6" stroke="#ececE8" stroke-width="0.7"/>
+<text x="82.0" y="374.6" font-size="10" fill="#6b6b66" font-weight="400" text-anchor="end" dominant-baseline="central">13 dB</text>
+<line x1="90.0" y1="319.2" x2="710.0" y2="319.2" stroke="#ececE8" stroke-width="0.7"/>
+<text x="82.0" y="319.2" font-size="10" fill="#6b6b66" font-weight="400" text-anchor="end" dominant-baseline="central">14 dB</text>
+<line x1="90.0" y1="263.8" x2="710.0" y2="263.8" stroke="#ececE8" stroke-width="0.7"/>
+<text x="82.0" y="263.8" font-size="10" fill="#6b6b66" font-weight="400" text-anchor="end" dominant-baseline="central">15 dB</text>
+<line x1="90.0" y1="208.5" x2="710.0" y2="208.5" stroke="#ececE8" stroke-width="0.7"/>
+<text x="82.0" y="208.5" font-size="10" fill="#6b6b66" font-weight="400" text-anchor="end" dominant-baseline="central">16 dB</text>
+<line x1="90.0" y1="153.1" x2="710.0" y2="153.1" stroke="#ececE8" stroke-width="0.7"/>
+<text x="82.0" y="153.1" font-size="10" fill="#6b6b66" font-weight="400" text-anchor="end" dominant-baseline="central">17 dB</text>
+<line x1="90.0" y1="97.7" x2="710.0" y2="97.7" stroke="#ececE8" stroke-width="0.7"/>
+<text x="82.0" y="97.7" font-size="10" fill="#6b6b66" font-weight="400" text-anchor="end" dominant-baseline="central">18 dB</text>
+<line x1="90.0" y1="430.0" x2="710.0" y2="430.0" stroke="#3d3d3a" stroke-width="1"/>
+<text x="121.0" y="446.0" font-size="11" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf0</text>
+<line x1="121.0" y1="341.4" x2="121.0" y2="286.0" stroke="#B45309" stroke-width="2.5"/>
+<circle cx="121.0" cy="322.0" r="7.0" fill="#B45309" stroke="none" stroke-width="1"/>
+<text x="121.0" y="357.4" font-size="10.5" fill="#B45309" font-weight="700" text-anchor="middle" dominant-baseline="central">13.9</text>
+<text x="183.0" y="446.0" font-size="11" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf1</text>
+<line x1="183.0" y1="269.4" x2="183.0" y2="142.0" stroke="#0F6E56" stroke-width="2.5"/>
+<circle cx="183.0" cy="238.9" r="7.0" fill="#0F6E56" stroke="none" stroke-width="1"/>
+<text x="183.0" y="222.9" font-size="10.5" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">15.4</text>
+<text x="245.0" y="446.0" font-size="11" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf2</text>
+<line x1="245.0" y1="280.5" x2="245.0" y2="119.8" stroke="#0F6E56" stroke-width="2.5"/>
+<circle cx="245.0" cy="227.8" r="7.0" fill="#0F6E56" stroke="none" stroke-width="1"/>
+<text x="245.0" y="211.8" font-size="10.5" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">15.6</text>
+<text x="307.0" y="446.0" font-size="11" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf3</text>
+<line x1="307.0" y1="280.5" x2="307.0" y2="125.4" stroke="#0F6E56" stroke-width="2.5"/>
+<circle cx="307.0" cy="230.6" r="7.0" fill="#0F6E56" stroke="none" stroke-width="1"/>
+<text x="307.0" y="214.6" font-size="10.5" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">15.6</text>
+<text x="369.0" y="446.0" font-size="11" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf4</text>
+<line x1="369.0" y1="341.4" x2="369.0" y2="258.3" stroke="#B45309" stroke-width="2.5"/>
+<circle cx="369.0" cy="308.2" r="7.0" fill="#B45309" stroke="none" stroke-width="1"/>
+<text x="369.0" y="357.4" font-size="10.5" fill="#B45309" font-weight="700" text-anchor="middle" dominant-baseline="central">14.2</text>
+<text x="431.0" y="446.0" font-size="11" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf5</text>
+<text x="431.0" y="263.8" font-size="9.5" fill="#6b6b66" font-weight="400" text-anchor="middle" dominant-baseline="central">no NRS</text>
+<text x="431.0" y="277.8" font-size="9.5" fill="#6b6b66" font-weight="400" text-anchor="middle" dominant-baseline="central">(NPSS)</text>
+<text x="493.0" y="446.0" font-size="11" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf6</text>
+<line x1="493.0" y1="274.9" x2="493.0" y2="119.8" stroke="#0F6E56" stroke-width="2.5"/>
+<circle cx="493.0" cy="216.8" r="7.0" fill="#0F6E56" stroke="none" stroke-width="1"/>
+<text x="493.0" y="200.8" font-size="10.5" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">15.9</text>
+<text x="555.0" y="446.0" font-size="11" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf7</text>
+<line x1="555.0" y1="269.4" x2="555.0" y2="119.8" stroke="#0F6E56" stroke-width="2.5"/>
+<circle cx="555.0" cy="219.5" r="7.0" fill="#0F6E56" stroke="none" stroke-width="1"/>
+<text x="555.0" y="203.5" font-size="10.5" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">15.8</text>
+<text x="617.0" y="446.0" font-size="11" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf8</text>
+<line x1="617.0" y1="263.8" x2="617.0" y2="97.7" stroke="#0F6E56" stroke-width="2.5"/>
+<circle cx="617.0" cy="197.4" r="7.0" fill="#0F6E56" stroke="none" stroke-width="1"/>
+<text x="617.0" y="181.4" font-size="10.5" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">16.2</text>
+<text x="679.0" y="446.0" font-size="11" fill="#2b2b29" font-weight="700" text-anchor="middle" dominant-baseline="central">sf9</text>
+<line x1="679.0" y1="252.8" x2="679.0" y2="81.1" stroke="#0F6E56" stroke-width="2.5"/>
+<circle cx="679.0" cy="205.7" r="7.0" fill="#0F6E56" stroke="none" stroke-width="1"/>
+<text x="679.0" y="189.7" font-size="10.5" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">16.1</text>
+<text x="90.0" y="470.0" font-size="10" fill="#6b6b66" font-weight="400" text-anchor="start" dominant-baseline="central">dot = median of the 18 five-second medians in my log; line = lowest to highest of them.</text>
+<text x="90.0" y="486.0" font-size="10" fill="#6b6b66" font-weight="400" text-anchor="start" dominant-baseline="central">Axis starts at 12 dB to show a 1.5 dB difference; nothing here is near trouble (decoding works from ~0 dB).</text>
+<text x="760.0" y="80.0" font-size="12" fill="#2b2b29" font-weight="700" text-anchor="start" dominant-baseline="central">What the other cells send, at the same time,</text>
+<text x="760.0" y="98.0" font-size="12" fill="#2b2b29" font-weight="700" text-anchor="start" dominant-baseline="central">on the same 935.4 MHz</text>
+<circle cx="766.0" cy="130.0" r="5.0" fill="#B45309" stroke="none" stroke-width="1"/>
+<text x="778.0" y="130.0" font-size="11" fill="#B45309" font-weight="700" text-anchor="start" dominant-baseline="central">sf0</text>
+<text x="852.0" y="130.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">every cell, every frame: NPBCH (MIB-NB)</text>
+<circle cx="766.0" cy="154.0" r="5.0" fill="#B45309" stroke="none" stroke-width="1"/>
+<text x="778.0" y="154.0" font-size="11" fill="#B45309" font-weight="700" text-anchor="start" dominant-baseline="central">sf4</text>
+<text x="852.0" y="154.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">every cell, every 2nd frame: SIB1-NB</text>
+<text x="852.0" y="178.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">(even-PCI cells in even frames, odd-PCI cells in odd)</text>
+<circle cx="766.0" cy="202.0" r="5.0" fill="#6b6b66" stroke="none" stroke-width="1"/>
+<text x="778.0" y="202.0" font-size="11" fill="#6b6b66" font-weight="700" text-anchor="start" dominant-baseline="central">sf5</text>
+<text x="852.0" y="202.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">every cell: NPSS, identical everywhere</text>
+<circle cx="766.0" cy="226.0" r="5.0" fill="#6b6b66" stroke="none" stroke-width="1"/>
+<text x="778.0" y="226.0" font-size="11" fill="#6b6b66" font-weight="700" text-anchor="start" dominant-baseline="central">sf9</text>
+<text x="852.0" y="226.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">every cell, even frames: NSSS</text>
+<circle cx="766.0" cy="250.0" r="5.0" fill="#0F6E56" stroke="none" stroke-width="1"/>
+<text x="778.0" y="250.0" font-size="11" fill="#0F6E56" font-weight="700" text-anchor="start" dominant-baseline="central">sf1–3, 6–8</text>
+<text x="852.0" y="250.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">only when a neighbour has traffic</text>
+<text x="852.0" y="274.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">(a meter reading, a paging message)</text>
+<text x="760.0" y="320.0" font-size="11.5" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">Their data lands on the squares where my cell</text>
+<text x="760.0" y="335.5" font-size="11.5" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">puts its NRS pilots (different PCI → different</text>
+<text x="760.0" y="351.1" font-size="11.5" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">pilot squares). Constant broadcast in sf0 and sf4</text>
+<text x="760.0" y="366.6" font-size="11.5" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">= a constant small hit: ≈ 1.5 dB less SINR.</text>
+<text x="760.0" y="382.1" font-size="11.5" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central"></text>
+<text x="760.0" y="397.6" font-size="11.5" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">Quiet subframes stay ≈ 15.5–16 dB.</text>
+<text x="760.0" y="413.1" font-size="11.5" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">Traffic bursts are rare: 662 of 664 data</text>
+<text x="760.0" y="428.7" font-size="11.5" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">subframes I checked were above 8 dB.</text>
+<text x="30.0" y="530.0" font-size="11.5" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">If Telkomsel used different frequencies for neighbours (reuse 3 or 7), sf0 and sf4 would look like every other subframe.</text>
+<text x="30.0" y="545.5" font-size="11.5" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">The dip is the fingerprint of frequency reuse 1: everyone broadcasts the same channels in the same subframes on one carrier.</text>
+<text x="30.0" y="561.0" font-size="11.5" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">Sf5 has no reference signal to measure. Sf9 is measured only in odd frames, where it carries NRS instead of the NSSS.</text>
+</svg>

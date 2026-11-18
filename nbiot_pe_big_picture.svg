@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 760" width="1180" height="760" font-family="Helvetica, Arial, 'DejaVu Sans', sans-serif" role="img" aria-label="NB-IoT receiver: the whole flowgraph">
+<title>NB-IoT receiver: the whole flowgraph</title>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d3d3a"/></marker><marker id="ahc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#A32D2D"/></marker><marker id="aht" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F6E56"/></marker><marker id="ahb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1d4ed8"/></marker><marker id="aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#B45309"/></marker><marker id="ahm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6b6b66"/></marker><marker id="ahp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6D28D9"/></marker><marker id="ahr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#B91C1C"/></marker><marker id="ahg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#15803d"/></marker></defs>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="30.0" y="24.0" font-size="15" fill="#2b2b29" font-weight="700" text-anchor="start" dominant-baseline="central">The whole receiver: antenna to decoded cell information</text>
+<rect x="30.0" y="60.0" width="150.0" height="84.0" rx="8" fill="#E6ECFB" stroke="#1d4ed8" stroke-width="1.3"/>
+<text x="105.0" y="79.0" font-size="13" fill="#1d4ed8" font-weight="700" text-anchor="middle" dominant-baseline="central">RTL-SDR</text>
+<text x="105.0" y="96.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">R820T dongle</text>
+<text x="105.0" y="111.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">tuned 935.7 MHz</text>
+<text x="105.0" y="126.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">1.92 MS/s</text>
+<rect x="210.0" y="60.0" width="170.0" height="84.0" rx="8" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1.3"/>
+<text x="295.0" y="79.0" font-size="13" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">Soapy RTLSDR Source</text>
+<text x="295.0" y="96.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">ppm correction</text>
+<text x="295.0" y="111.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">gain 30 dB</text>
+<text x="295.0" y="126.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">complex samples</text>
+<rect x="410.0" y="60.0" width="190.0" height="84.0" rx="8" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1.3"/>
+<text x="505.0" y="79.0" font-size="13" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">Freq Xlating FFT Filter</text>
+<text x="505.0" y="96.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">shift −300 kHz</text>
+<text x="505.0" y="111.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">keep ±100 kHz</text>
+<text x="505.0" y="126.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">still 1.92 MS/s</text>
+<rect x="630.0" y="60.0" width="150.0" height="84.0" rx="8" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1.3"/>
+<text x="705.0" y="79.0" font-size="13" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">AGC2</text>
+<text x="705.0" y="96.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">slow (~50 ms)</text>
+<text x="705.0" y="111.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">steady levels</text>
+<text x="705.0" y="126.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">for the displays</text>
+<rect x="810.0" y="60.0" width="170.0" height="84.0" rx="8" fill="#F8E6E4" stroke="#A32D2D" stroke-width="1.3"/>
+<text x="895.0" y="79.0" font-size="13" fill="#A32D2D" font-weight="700" text-anchor="middle" dominant-baseline="central">1 · NB-IoT Sync</text>
+<text x="895.0" y="96.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">find NPSS ±12 kHz</text>
+<text x="895.0" y="111.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">track time + CFO</text>
+<text x="895.0" y="126.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">strip cyclic prefix</text>
+<path d="M180.0 102.0 L208.0 102.0" fill="none" stroke="#3d3d3a" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M380.0 102.0 L408.0 102.0" fill="none" stroke="#3d3d3a" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M600.0 102.0 L628.0 102.0" fill="none" stroke="#3d3d3a" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M780.0 102.0 L808.0 102.0" fill="none" stroke="#3d3d3a" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="1010.0" y="60.0" width="140.0" height="38.0" rx="8" fill="#F1F1EE" stroke="#6b6b66" stroke-width="1.3"/>
+<text x="1080.0" y="78.5" font-size="12" fill="#6b6b66" font-weight="700" text-anchor="middle" dominant-baseline="central">Frequency Sink</text>
+<path d="M705.0 144.0 L705.0 164.0 L1080.0 164.0 L1080.0 100.0" fill="none" stroke="#6b6b66" stroke-width="1.4" marker-end="url(#ahm)"/>
+<path d="M1080.0 164.0 L1168.0 164.0 L1168.0 530.0 L485.0 530.0 L485.0 558.0" fill="none" stroke="#3d3d3a" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="810.0" y="220.0" width="170.0" height="84.0" rx="8" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1.3"/>
+<text x="895.0" y="239.0" font-size="13" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">Multiply Const</text>
+<text x="895.0" y="256.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">vector of 128</text>
+<text x="895.0" y="271.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">exp(jπn/128):</text>
+<text x="895.0" y="286.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">half-subcarrier shift</text>
+<rect x="600.0" y="220.0" width="180.0" height="84.0" rx="8" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1.3"/>
+<text x="690.0" y="239.0" font-size="13" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">FFT (128 points)</text>
+<text x="690.0" y="256.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">forward, shift on</text>
+<text x="690.0" y="271.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">one OFDM symbol</text>
+<text x="690.0" y="286.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">→ 128 frequency bins</text>
+<rect x="410.0" y="220.0" width="160.0" height="84.0" rx="8" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1.3"/>
+<text x="490.0" y="246.5" font-size="13" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">Vector to Stream</text>
+<text x="490.0" y="263.5" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">128 bins</text>
+<text x="490.0" y="278.5" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">one after another</text>
+<rect x="210.0" y="220.0" width="170.0" height="84.0" rx="8" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1.3"/>
+<text x="295.0" y="239.0" font-size="13" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">Keep M in N</text>
+<text x="295.0" y="256.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">keep 12 of 128</text>
+<text x="295.0" y="271.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">offset 59</text>
+<text x="295.0" y="286.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">= NB-IoT subcarriers</text>
+<rect x="30.0" y="220.0" width="150.0" height="84.0" rx="8" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1.3"/>
+<text x="105.0" y="239.0" font-size="13" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">Stream to Vector</text>
+<text x="105.0" y="256.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">12 subcarriers</text>
+<text x="105.0" y="271.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">= one symbol</text>
+<text x="105.0" y="286.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">of the grid</text>
+<path d="M895.0 144.0 L895.0 218.0" fill="none" stroke="#3d3d3a" stroke-width="1.4" marker-end="url(#ah)"/>
+<text x="903.0" y="182.0" font-size="10" fill="#A32D2D" font-weight="600" text-anchor="start" dominant-baseline="central">140 vectors × 128 per 10 ms frame</text>
+<text x="903.0" y="196.0" font-size="10" fill="#A32D2D" font-weight="400" text-anchor="start" dominant-baseline="central">tag 'frame' on the first one</text>
+<path d="M810.0 262.0 L782.0 262.0" fill="none" stroke="#3d3d3a" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M600.0 262.0 L572.0 262.0" fill="none" stroke="#3d3d3a" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M410.0 262.0 L382.0 262.0" fill="none" stroke="#3d3d3a" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M210.0 262.0 L182.0 262.0" fill="none" stroke="#3d3d3a" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="30.0" y="400.0" width="230.0" height="100.0" rx="8" fill="#F8E6E4" stroke="#A32D2D" stroke-width="1.3"/>
+<text x="145.0" y="419.5" font-size="13" fill="#A32D2D" font-weight="700" text-anchor="middle" dominant-baseline="central">2 · NB-IoT Decoder</text>
+<text x="145.0" y="436.5" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">cell ID (NSSS) · channel (NRS)</text>
+<text x="145.0" y="451.5" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">MIB-NB · SIB1-NB · SI messages</text>
+<text x="145.0" y="466.5" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">per-subframe SINR</text>
+<text x="145.0" y="481.5" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">ASN.1 → text</text>
+<path d="M105.0 304.0 L105.0 398.0" fill="none" stroke="#3d3d3a" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="310.0" y="370.0" width="180.0" height="50.0" rx="8" fill="#F1F1EE" stroke="#6b6b66" stroke-width="1.3"/>
+<text x="400.0" y="387.0" font-size="12" fill="#6b6b66" font-weight="700" text-anchor="middle" dominant-baseline="central">Message Debug</text>
+<text x="400.0" y="404.0" font-size="10" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">decoded text → console</text>
+<rect x="310.0" y="440.0" width="180.0" height="50.0" rx="8" fill="#F1F1EE" stroke="#6b6b66" stroke-width="1.3"/>
+<text x="400.0" y="457.0" font-size="12" fill="#6b6b66" font-weight="700" text-anchor="middle" dominant-baseline="central">Constellation × 3</text>
+<text x="400.0" y="474.0" font-size="10" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">NPBCH · clean · interfered</text>
+<rect x="520.0" y="440.0" width="190.0" height="50.0" rx="8" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1.3"/>
+<text x="615.0" y="457.0" font-size="12" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">PDU to Tagged Stream</text>
+<text x="615.0" y="474.0" font-size="10" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">10 SINR values per frame</text>
+<rect x="740.0" y="440.0" width="170.0" height="50.0" rx="8" fill="#F1F1EE" stroke="#6b6b66" stroke-width="1.3"/>
+<text x="825.0" y="457.0" font-size="12" fill="#6b6b66" font-weight="700" text-anchor="middle" dominant-baseline="central">Time Raster</text>
+<text x="825.0" y="474.0" font-size="10" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">SINR map</text>
+<path d="M260.0 420.0 L284.0 420.0 L284.0 395.0 L308.0 395.0" fill="none" stroke="#A32D2D" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#ahc)"/>
+<path d="M260.0 465.0 L308.0 465.0" fill="none" stroke="#A32D2D" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#ahc)"/>
+<path d="M490.0 465.0 L518.0 465.0" fill="none" stroke="#A32D2D" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#ahc)"/>
+<path d="M710.0 465.0 L738.0 465.0" fill="none" stroke="#3d3d3a" stroke-width="1.4" marker-end="url(#ah)"/>
+<text x="276.0" y="500.0" font-size="10" fill="#A32D2D" font-weight="600" text-anchor="start" dominant-baseline="central">messages</text>
+<rect x="530.0" y="368.0" width="180.0" height="44.0" rx="8" fill="#F1F1EE" stroke="#6b6b66" stroke-width="1.3"/>
+<text x="620.0" y="382.0" font-size="12" fill="#6b6b66" font-weight="700" text-anchor="middle" dominant-baseline="central">Resource grid raster</text>
+<text x="620.0" y="399.0" font-size="10" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">|X|² in dB</text>
+<path d="M295.0 304.0 L295.0 330.0 L620.0 330.0 L620.0 366.0" fill="none" stroke="#6b6b66" stroke-width="1.4" marker-end="url(#ahm)"/>
+<rect x="410.0" y="560.0" width="150.0" height="70.0" rx="8" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1.3"/>
+<text x="485.0" y="587.0" font-size="13" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">Keep 1 in 8</text>
+<text x="485.0" y="604.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">→ 240 kS/s</text>
+<rect x="590.0" y="560.0" width="170.0" height="70.0" rx="8" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1.3"/>
+<text x="675.0" y="579.5" font-size="13" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">FFT Filter</text>
+<text x="675.0" y="596.5" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">NPSS matched taps</text>
+<text x="675.0" y="611.5" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">(the correlator)</text>
+<rect x="790.0" y="560.0" width="170.0" height="70.0" rx="8" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1.3"/>
+<text x="875.0" y="579.5" font-size="12" fill="#0F6E56" font-weight="700" text-anchor="middle" dominant-baseline="central">|corr|² ÷ energy</text>
+<text x="875.0" y="596.5" font-size="10" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">Complex to Mag², Moving</text>
+<text x="875.0" y="611.5" font-size="10" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">Average, Divide</text>
+<rect x="990.0" y="560.0" width="160.0" height="70.0" rx="8" fill="#F1F1EE" stroke="#6b6b66" stroke-width="1.3"/>
+<text x="1070.0" y="587.0" font-size="12" fill="#6b6b66" font-weight="700" text-anchor="middle" dominant-baseline="central">Time Raster</text>
+<text x="1070.0" y="604.0" font-size="10" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">NPSS, 10 ms per row</text>
+<path d="M560.0 595.0 L588.0 595.0" fill="none" stroke="#3d3d3a" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M760.0 595.0 L788.0 595.0" fill="none" stroke="#3d3d3a" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M960.0 595.0 L988.0 595.0" fill="none" stroke="#3d3d3a" stroke-width="1.4" marker-end="url(#ah)"/>
+<text x="330.0" y="595.0" font-size="11" fill="#6b6b66" font-weight="600" text-anchor="start" dominant-baseline="central">display branch:</text>
+<text x="330.0" y="611.0" font-size="10" fill="#6b6b66" font-weight="400" text-anchor="start" dominant-baseline="central">is a sync line there?</text>
+<rect x="990.0" y="390.0" width="160.0" height="74.0" rx="8" fill="#EDE7FB" stroke="#6D28D9" stroke-width="1.3"/>
+<text x="1070.0" y="412.0" font-size="13" fill="#6D28D9" font-weight="700" text-anchor="middle" dominant-baseline="central">Python Module</text>
+<text x="1070.0" y="430.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">'nbiot': the maths</text>
+<text x="1070.0" y="445.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="middle" dominant-baseline="central">both EPBs call into it</text>
+<path d="M1070.0 390.0 L1070.0 345.0 L995.0 345.0 L995.0 120.0 L982.0 120.0" fill="none" stroke="#6D28D9" stroke-width="1.3" stroke-dasharray="3 3" marker-end="url(#ahp)"/>
+<path d="M995.0 345.0 L240.0 345.0 L240.0 388.0" fill="none" stroke="#6D28D9" stroke-width="1.3" stroke-dasharray="3 3" marker-end="url(#ahp)"/>
+<rect x="30.0" y="680.0" width="22.0" height="16.0" rx="4" fill="#E6ECFB" stroke="#1d4ed8" stroke-width="1.2"/>
+<text x="58.0" y="688.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">hardware</text>
+<rect x="180.0" y="680.0" width="22.0" height="16.0" rx="4" fill="#E3F2EC" stroke="#0F6E56" stroke-width="1.2"/>
+<text x="208.0" y="688.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">stock GNU Radio block</text>
+<rect x="400.0" y="680.0" width="22.0" height="16.0" rx="4" fill="#F8E6E4" stroke="#A32D2D" stroke-width="1.2"/>
+<text x="428.0" y="688.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">Embedded Python Block</text>
+<rect x="620.0" y="680.0" width="22.0" height="16.0" rx="4" fill="#F1F1EE" stroke="#6b6b66" stroke-width="1.2"/>
+<text x="648.0" y="688.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">display</text>
+<rect x="760.0" y="680.0" width="22.0" height="16.0" rx="4" fill="#EDE7FB" stroke="#6D28D9" stroke-width="1.2"/>
+<text x="788.0" y="688.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">Python Module (shared code)</text>
+<path d="M30.0 720.0 L66.0 720.0" fill="none" stroke="#3d3d3a" stroke-width="1.4" marker-end="url(#ah)"/>
+<text x="74.0" y="720.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">sample stream</text>
+<path d="M220.0 720.0 L256.0 720.0" fill="none" stroke="#A32D2D" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#ahc)"/>
+<text x="264.0" y="720.0" font-size="11" fill="#2b2b29" font-weight="400" text-anchor="start" dominant-baseline="central">message (decoded text, constellation points, SINR)</text>
+</svg>
