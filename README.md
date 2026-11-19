@@ -2,6 +2,8 @@
 
 *A cheap RTL-SDR dongle, a Windows laptop, and one GNU Radio flowgraph that finds an NB-IoT carrier at 935.4 MHz, locks onto it, works out which cell is talking, and reads everything that cell broadcasts to every device in range: its frame clock, its name, its network, its rules for joining and for paging sleeping meters. This is how the signal is built, how each block of the flowgraph takes it apart, and what cell 260 told me.*
 
+[Code repo here](https://github.com/handiko/NBIoT-Rx)
+
 ---
 
 ## Why I did this
